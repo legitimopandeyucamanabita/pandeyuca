@@ -67,6 +67,14 @@
       cursor: pointer;
     }
 
+    .btn-llegar {
+      position: absolute; bottom: 15px; left: 15px; z-index: 100;
+      background: #4285F4; color: white; border: 3px solid #000;
+      border-radius: 12px; padding: 8px 12px; font-size: 11px; font-weight: 900;
+      display: none; align-items: center; gap: 5px; cursor: pointer;
+      box-shadow: 3px 3px 0px #000; text-decoration: none;
+    }
+
     .interaccion-rapida { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
     .btn-mini { background: white; border: 2px solid #000; padding: 8px 15px; border-radius: 50px; font-weight: 900; box-shadow: 3px 3px 0px #000; cursor: pointer; }
 
@@ -114,6 +122,10 @@
 
     <div class="mapa-container">
       <div id="mapa"></div>
+      <div id="btn-llegar" class="btn-llegar" onclick="abrirGoogleMaps()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" width="18">
+        CÓMO LLEGAR
+      </div>
       <button class="btn-centrar" onclick="centrarEnRuta()">🎯</button>
     </div>
 
@@ -155,66 +167,79 @@
   let watchId = null;
   let ultimaPos = { lat: -1.024, lon: -79.46 };
 
-  // MAPA
+  // INICIALIZAR MAPA
   const map = L.map('mapa', { zoomControl: false }).setView([ultimaPos.lat, ultimaPos.lon], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
   let marker = L.marker([ultimaPos.lat, ultimaPos.lon]).addTo(map);
-  setTimeout(() => { map.invalidateSize(); }, 500);
 
+  // Funciones de Menú
   function abrirMenu() { document.getElementById("miMenu").style.width = "250px"; }
   function cerrarMenu() { document.getElementById("miMenu").style.width = "0"; }
   function centrarEnRuta() { map.flyTo([ultimaPos.lat, ultimaPos.lon], 17); }
+
+  function abrirGoogleMaps() {
+    // Corregido el formato del link para evitar errores de sintaxis
+    const url = "https://www.google.com/maps/dir/?api=1&destination=" + ultimaPos.lat + "," + ultimaPos.lon;
+    window.open(url, '_blank');
+  }
 
   // ESCUCHA DE FIREBASE
   db.ref('ubicacion_ruta').on('value', (s) => {
     const d = s.val();
     const barra = document.getElementById('barra-estado');
+    const btnLlegar = document.getElementById('btn-llegar');
     if (d && d.estado === "activo") {
       ultimaPos = { lat: d.lat, lon: d.lon };
       marker.setLatLng([d.lat, d.lon]).bindPopup("🚚 ¡Estamos aquí!").openPopup();
       barra.style.background = "#39ff14"; barra.style.color = "#000";
       barra.innerText = "✅ ¡ESTAMOS EN RUTA!";
+      btnLlegar.style.display = "flex";
     } else {
       barra.style.background = "#ff0000"; barra.style.color = "#fff";
       barra.innerText = "❌ RUTA ACTUALMENTE CERRADA";
       marker.bindPopup("🚚 Ruta Cerrada").closePopup();
+      btnLlegar.style.display = "none";
     }
   });
 
   db.ref('likes').on('value', s => { 
-    document.getElementById('count-likes').innerText = s.val() || 0; 
+    const val = s.val();
+    document.getElementById('count-likes').innerText = val || 0; 
   });
-  function darLike() { db.ref('likes').transaction(c => (c || 0) + 1); }
 
-  // FUNCIÓN MAESTRA DE ADMINISTRADOR
+  function darLike() { 
+    db.ref('likes').transaction(c => (c || 0) + 1); 
+  }
+
   function manejarRuta(accion) {
     const pass = prompt("Ingrese Clave de Administrador:");
     if (pass !== CLAVE_ADMIN) return alert("Clave Incorrecta");
 
     if (accion === 'iniciar') {
       if (navigator.geolocation) {
-        // Si ya hay un rastreo activo, lo cerramos antes de empezar uno nuevo
         if (watchId) navigator.geolocation.clearWatch(watchId);
-        
         watchId = navigator.geolocation.watchPosition(pos => {
           db.ref('ubicacion_ruta').set({
             lat: pos.coords.latitude,
             lon: pos.coords.longitude,
             estado: "activo"
           });
-        }, null, { enableHighAccuracy: true });
-        alert("✅ Ruta Iniciada Correctamente");
+        }, (err) => { alert("Error GPS: " + err.message); }, { enableHighAccuracy: true });
+        alert("✅ Ruta Iniciada");
       } else {
-        alert("Error: Tu dispositivo no permite GPS");
+        alert("GPS no soportado");
       }
     } else if (accion === 'detener') {
       if (watchId) navigator.geolocation.clearWatch(watchId);
       watchId = null;
       db.ref('ubicacion_ruta').update({ estado: "inactivo" });
-      alert("🛑 Ruta Cerrada Correctamente");
+      alert("🛑 Ruta Cerrada");
     }
     cerrarMenu();
   }
+
+  // Reparar tamaño del mapa al cargar
+  setTimeout(() => { map.invalidateSize(); }, 800);
 </script>
 </body>
 </html>
