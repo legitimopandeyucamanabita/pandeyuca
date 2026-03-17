@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Legítimo Pan de Yuca Manabita"
+version = "1.0.0"
+id = "artifacts/pan-de-yuca"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 21236
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/pan-de-yuca run dev"
+
+[services.env]
+PORT = "21236"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/pan-de-yuca", "run", "build"]
+publicDir = "artifacts/pan-de-yuca/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

@@ -4,6 +4,22 @@
 
 pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
 
+## Artifacts
+
+### `artifacts/pan-de-yuca` (`@workspace/pan-de-yuca`)
+
+**Legítimo Pan de Yuca Manabita** — React + Vite web app at `/` (root).
+
+- Dark-themed landing page for a street food vendor
+- Leaflet map with OpenStreetMap tiles showing real-time route position
+- Firebase Realtime Database integration for live GPS tracking and likes counter
+- Admin drawer (password: `panyuca.2026`) for starting/stopping the route via GPS
+- WhatsApp order buttons linking to `+593984637626`
+- Promo display: $5.00 deal with free funda or yogurt
+- Pricing: Funda $1.00, Yogurt $0.75, 4 panes + yogurt $1.50
+- Firebase project: `pan-de-yuca`, DB: `https://pan-de-yuca-default-rtdb.firebaseio.com`
+- Dependencies: `firebase`, `leaflet`, `@types/leaflet`
+
 ## Stack
 
 - **Monorepo tool**: pnpm workspaces
