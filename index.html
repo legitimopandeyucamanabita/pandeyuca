@@ -1,1 +1,52 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pan de Yuca Manabita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --brown: #6b3e26; --gold: #f2b705; --bg: #fffaf4; --whatsapp: #25D366; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; text-align: center; }
+        header { padding: 40px 20px; }
+        .logo { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--brown); object-fit: cover; margin-bottom: 10px; }
+        h1 { color: var(--brown); font-size: 1.8rem; margin-bottom: 5px; }
+        .container { width: 90%; max-width: 420px; padding-bottom: 40px; }
+        .card { background: white; border-radius: 25px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .prices { list-style: none; }
+        .prices li { display: flex; justify-content: space-between; padding: 12px; background: #fdf3e5; margin: 8px 0; border-radius: 12px; font-weight: 600; }
+        .promo { background: linear-gradient(135deg, var(--gold), #ff8c00); padding: 20px; border-radius: 20px; margin-top: 15px; }
+        .promo-item { background: white; border-radius: 8px; padding: 5px; margin-top: 5px; font-weight: 800; }
+        .btn { display: block; padding: 18px; margin-top: 15px; border-radius: 50px; text-decoration: none; font-weight: 800; color: white; transition: 0.3s; }
+        .whatsapp { background: var(--whatsapp); }
+        .pedido { background: var(--brown); }
+        .maps { background: #1a73e8; }
+        footer { padding: 20px; font-size: 0.8rem; color: #888; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="artefactos/logo.png" alt="Logo" class="logo">
+        <h1>Pan de Yuca Manabita</h1>
+        <p>Sabor en cada bocado</p>
+    </header>
+    <div class="container">
+        <div class="card">
+            <ul class="prices">
+                <li><span>Funda 4 panes</span><strong>$1.00</strong></li>
+                <li><span>Yogurt</span><strong>$0.75</strong></li>
+                <li><span>Combo</span><strong>$1.50</strong></li>
+            </ul>
+            <div class="promo">
+                <strong>Promo $5.00</strong>
+                <div class="promo-item">🎁 1 funda GRATIS</div>
+            </div>
+        </div>
+        <a href="https://wa.me/593984637626" class="btn whatsapp">💬 WhatsApp</a>
+        <a href="https://wa.me/593984637626?text=Hola,%20quiero%20hacer%20un%20pedido" class="btn pedido">🛍️ Pide y retira</a>
+        <a href="https://www.google.com/maps" class="btn maps">📍 Cómo llegar</a>
+    </div>
+    <footer>© 2026 Pan de Yuca Manabita</footer>
+</body>
+</html>
