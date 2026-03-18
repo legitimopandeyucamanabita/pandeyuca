@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legítimo Pan de Yuca Manabita</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root {
+      --brand-brown: #6b3e26; 
+      --brand-yellow: #f2b705;
+      --bg-dark: #070A12;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: 'Montserrat', sans-serif; color: var(--text);
+      background: radial-gradient(circle at top, #0f172a, var(--bg-dark));
+      min-height: 100vh;
+    }
+
+    /* BARRA SUPERIOR - BRANDING ENFOCADO */
+    .topbar { 
+      position: sticky; top: 0; z-index: 1000; 
+      background: rgba(7, 10, 18, 0.9); 
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(242, 183, 5, 0.2);
+      height: 80px;
+    }
+    .topbar-inner { 
+      max-width: 1100px; margin: auto; padding: 0 16px; 
+      display: flex; align-items: center; justify-content: space-between; height: 100%;
+    }
+    
+    .brand-identity { display: flex; align-items: center; gap: 15px; }
+    
+    .logo-branding {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: url('logo.png') center/cover; /* USA EXACTAMENTE ESTE NOMBRE EN GITHUB */
+      border: 4px solid var(--brand-yellow);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6), 0 0 15px rgba(242, 183, 5, 0.3);
+      transform: translateY(10px); 
+      z-index: 1001;
+    }
+
+    .status-pill {
+      display: flex; align-items: center; gap: 10px; padding: 10px 18px;
+      border-radius: 999px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); font-weight: 800; font-size: 0.8rem;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #EF4444; box-shadow: 0 0 8px #EF4444; }
+
+    /* LAYOUT MÓVIL Y DESKTOP */
+    .wrap { max-width: 1100px; margin: auto; padding: 40px 20px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 25px; }
+    @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; padding-top: 20px; } .logo-branding { width: 75px; height: 75px; } }
+
+    .card { 
+      background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); 
+      border-radius: 24px; padding: 28px; position: relative;
+    }
+
+    .hero-h2 { margin: 0; font-size: 2.2rem; font-weight: 900; line-height: 1.1; }
+    .hero-h2 span { color: var(--brand-yellow); display: block; font-size: 1.3rem; margin-top: 8px; }
+    
+    .trust-badges { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+    .badge { 
+      padding: 8px 15px; border-radius: 12px; background: rgba(242, 183, 5, 0.1); 
+      border: 1px solid var(--brand-yellow); color: #fff; font-size: 0.8rem; font-weight: 700;
+    }
+
+    /* BOTONES ACCIÓN */
+    .btn { 
+      border: none; cursor: pointer; font-weight: 800; padding: 15px 25px; 
+      border-radius: 16px; display: inline-flex; align-items: center; gap: 10px; 
+      transition: 0.3s; text-decoration: none; color: #fff;
+    }
+    .btn:active { transform: scale(0.95); }
+    .btn-pide { background: var(--brand-yellow); color: var(--brand-brown); }
+    .btn-wa { background: #2563eb; }
+    .btn-like { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); }
+
+    /* MAPA Y CONTROLES NÍTIDOS */
+    #mapa { height: 400px; border-radius: 20px; margin-top: 25px; border: 1px solid rgba(255,255,255,0.1); z-index: 1; }
+    
+    .map-controls {
+      position: absolute; bottom: 45px; right: 45px; z-index: 1000;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .map-btn {
+      background: var(--brand-brown); border: 2px solid var(--brand-yellow);
+      color: #fff; padding: 12px 20px; border-radius: 14px; font-weight: 800;
+      cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+      display: flex; align-items: center; gap: 8px; transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .btn-center { background: #ffffff; color: var(--brand-brown); border-color: #ffffff; }
+    .map-btn:hover { filter: brightness(1.1); }
+
+    /* MENÚ Y PRECIOS */
+    .menu-header { color: var(--brand-yellow); font-weight: 900; font-size: 1.6rem; margin-bottom: 20px; }
+    .item { 
+      display: flex; justify-content: space-between; padding: 15px 0; 
+      border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600;
+    }
+    .price { color: var(--brand-yellow); font-weight: 900; }
+
+    .promo-box {
+      background: linear-gradient(135deg, var(--brand-yellow), #d9a406);
+      color: var(--brand-brown); border-radius: 20px; padding: 25px;
+      text-align: center; font-weight: 900; margin-top: 25px;
+      box-shadow: 0 10px 25px rgba(242, 183, 5, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-identity">
+        <div class="logo-branding"></div>
+        <h1 style="font-size: 1.1rem; font-weight: 900; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Pan de Yuca Manabita</h1>
+      </div>
+      <div class="status-pill">
+        <div id="dot" class="dot"></div>
+        <span id="estadoTxt">Cerrado</span>
+        <button onclick="toggleAdmin()" style="background:none; border:none; opacity:0.1; cursor:pointer; padding:5px;">🛡️</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section>
+      <div class="card">
+        <div class="hero-h2">
+          Sabor Manabita Auténtico
+          <span>Tradición que camina hacia ti</span>
+        </div>
+        
+        <p style="color: rgba(255,255,255,0.7); font-weight: 500; margin-top: 15px;">Ubica nuestra ruta en vivo y disfruta del pan de yuca más fresco de la ciudad.</p>
+
+        <div class="trust-badges">
+          <div class="badge">✓ Higiene 100%</div>
+          <div class="badge">📍 Ruta en vivo</div>
+          <div class="badge">💬 Pedido rápido</div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="https://wa.me/593984637626" class="btn btn-pide">🛍️ Haz tu pedido</a>
+          <a href="https://wa.me/593984637626" class="btn btn-wa">💬 WhatsApp</a>
+          <button class="btn btn-like" onclick="addLike()">❤️ <span id="likes">0</span></button>
+        </div>
+
+        <div id="mapa"></div>
+        
+        <div class="map-controls">
+          <button class="map-btn btn-center" onclick="centrarMapa()">🎯 Centrar Mapa</button>
+          <button class="map-btn" onclick="llevameAlCamion()">🧭 Llevame al Camión</button>
+        </div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <div class="menu-header">Nuestros Precios</div>
+        <div class="item"><span>🫓 Funda (4 panes)</span><span class="price">$1.00</span></div>
+        <div class="item"><span>🥤 Vaso de Yogurt Artesanal</span><span class="price">$0.75</span></div>
+        <div class="item"><span>🔥 Combo 1 (4 Panes + Vaso Yogurt)</span><span class="price">$1.50</span></div>
+        <div class="item"><span>🔥 Combo 2 (6 panes + Vaso Yogurt)</span><span class="price">$2.00</span></div>
+
+        <div class="promo-box">
+          🎁 PROMO ESPECIAL<br>
+          <span style="font-size: 0.8rem; opacity: 0.8;">POR LA COMPRA DE 5 FUNDAS</span><br>
+          ¡LLEVATE</span><br>
+          //  2 VASOS DE YOGURT  //</span><br>
+                     O</span><br> 
+          //  1 FUNDA ADICIONAL  //</span><br>
+                      😋</span><br> 
+             😍TOTALMENTE GRATIS!😍
+        </div>
+        
+        <button class="btn" style="width:100%; margin-top:25px; border: 1px solid var(--brand-yellow); color: var(--brand-yellow); background: transparent;" onclick="copyLink()">🔗 Compartir Ubicación</button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
+      authDomain: "pan-de-yuca.firebaseapp.com",
+      databaseURL: "https://pan-de-yuca-default-rtdb.firebaseio.com",
+      projectId: "pan-de-yuca",
+      storageBucket: "pan-de-yuca.firebasestorage.app",
+      messagingSenderId: "146026389755",
+      appId: "1:146026389755:web:5148691db252f56215d05e"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const rutaRef = db.ref('ubicacion_ruta');
+
+    // Inicializar Mapa
+    const map = L.map('mapa', { zoomControl: false }).setView([-1.024, -79.46], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const carIcon = L.divIcon({ html: `<div id="camion" style="font-size:32px; transition:0.3s; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">🚚</div>`, className: 'none' });
+    const marker = L.marker([-1.024, -79.46], { icon: carIcon }).addTo(map);
+
+    function centrarMapa() {
+      map.flyTo(marker.getLatLng(), 17, { duration: 1.5 });
+    }
+
+    function llevameAlCamion() {
+      const pos = marker.getLatLng();
+      window.open(`https://www.google.com/maps?q=${pos.lat},${pos.lng}`, '_blank');
+    }
+
+    // Escuchar Firebase
+    rutaRef.on('value', snap => {
+      const d = snap.val();
+      const dot = document.getElementById('dot');
+      const txt = document.getElementById('estadoTxt');
+      
+      if(d && d.estado === 'activo'){
+        marker.setLatLng([d.lat, d.lon]);
+        document.getElementById('camion').style.transform = `rotate(${d.heading || 0}deg)`;
+        dot.style.background = "#22C55E";
+        dot.style.boxShadow = "0 0 10px #22C55E";
+        txt.innerText = "Ruta Abierta";
+      } else {
+        dot.style.background = "#EF4444";
+        dot.style.boxShadow = "0 0 8px #EF4444";
+        txt.innerText = "Cerrado";
+      }
+    });
+
+    // Control de Administrador
+    let watchId = null;
+    let heading = 0;
+    window.addEventListener('deviceorientation', e => { heading = e.webkitCompassHeading || (360 - e.alpha) || 0; });
+
+    function toggleAdmin(){
+      const p = prompt("Clave de Administrador:");
+      if(p !== "panyuca.2026") return;
+      if(!watchId){
+        if (navigator.geolocation) {
+          watchId = navigator.geolocation.watchPosition(pos => {
+            rutaRef.set({ lat: pos.coords.latitude, lon: pos.coords.longitude, heading: heading, estado: 'activo' });
+          }, (err) => alert("Error GPS: " + err.message), { enableHighAccuracy: true });
+          alert("✅ ¡Rastreo en vivo activado!");
+        }
+      } else {
+        navigator.geolocation.clearWatch(watchId); watchId = null;
+        rutaRef.update({ estado: 'cerrado' });
+        alert("⛔ Ruta cerrada.");
+      }
+    }
+
+    // Likes y Compartir
+    function addLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
+    db.ref('likes').on('value', s => document.getElementById('likes').innerText = s.val() || 0);
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("¡Enlace de ubicación copiado!");
+    }
+  </script>
+</body>
+</html>
