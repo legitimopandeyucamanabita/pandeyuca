@@ -14,9 +14,10 @@
         :root {
             --gold-gradient: linear-gradient(135deg, #c0a16c 0%, #b39158 100%);
             --price-gold: #b5955b;
-            --brand-yellow: #f2b705; 
+            --brand-yellow: #f2b705; /* El amarillo de branding original */
             --font-fancy: 'Dancing Script', cursive;
             --paper-bg: #fdfbf2;
+            /* Definimos el marco uniforme para reutilizarlo */
             --gold-frame: 5px solid var(--price-gold);
             --gold-shadow: 0 10px 20px rgba(181, 149, 91, 0.3);
         }
@@ -43,10 +44,11 @@
             position: relative;
         }
 
+        /* --- BRANDING DE ALTO NIVEL --- */
         .branding-section { text-align: center; margin-bottom: 50px; }
         .main-logo {
             width: 160px; height: 160px; background: white;
-            border-radius: 50%; border: 6px solid var(--brand-yellow);
+            border-radius: 50%; border: 6px solid var(--brand-yellow); /* Branding original */
             padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: 0.5s; object-fit: cover;
         }
@@ -59,6 +61,7 @@
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
 
+        /* --- ESTRUCTURA GRID --- */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1.2fr 1fr;
@@ -66,6 +69,7 @@
             align-items: center;
         }
 
+        /* --- TARJETAS DE PRODUCTO CON EFECTOS --- */
         .product-card {
             text-align: center;
             padding: 20px;
@@ -74,8 +78,9 @@
             border-radius: 20px;
             overflow: hidden;
         }
-        .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.4); }
+        .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.5); }
         
+        /* Shimmer Effect */
         .product-card::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
@@ -83,19 +88,21 @@
         }
         .product-card:hover::before { left: 150%; }
 
+        /* APLICACIÓN DEL MARCO DORADO UNIFORME */
         .framed-img {
             width: 100%;
-            max-width: 170px;
+            max-width: 170px; /* Tamaño uniforme */
             height: auto;
             object-fit: cover;
-            border-radius: 12px;
-            border: var(--gold-frame);
-            box-shadow: var(--gold-shadow);
+            border-radius: 12px; /* Mismo redondeado */
+            border: var(--gold-frame); /* Mismo marco */
+            box-shadow: var(--gold-shadow); /* Misma sombra */
         }
 
         .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
         .prod-info span { font-size: 1rem; color: #777; font-weight: 700; }
 
+        /* --- PRECIOS ESTILO IMAGEN ORIGINAL --- */
         .price-tag {
             background: var(--price-gold);
             color: white; width: 85px; height: 85px; border-radius: 50%;
@@ -106,6 +113,7 @@
         .price-tag big { font-size: 1.5rem; }
         .price-tag small { font-size: 0.6rem; letter-spacing: 1px; }
 
+        /* --- PROMO IRRESISTIBLE --- */
         .promo-box {
             background: white; border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -114,17 +122,19 @@
         }
         .promo-box:hover { transform: scale(1.03); }
         .promo-header { background: var(--gold-gradient); color: white; padding: 20px; }
-        .promo-header h4 { margin: 0; font-size: 1rem; letter-spacing: 1px; font-weight: 800; }
-        .promo-header h2 { font-family: var(--font-fancy); font-size: 3rem; margin: 5px 0; }
+        .promo-header h4 { margin: 0; font-size: 1.1rem; letter-spacing: 2px; font-weight: 800; }
+        .promo-header h2 { font-family: var(--font-fancy); font-size: 3.2rem; margin: 5px 0; }
         
         .promo-content { padding: 30px 20px; }
         .gift-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
         
+        /* Imágenes de regalo, ahora comparten las mismas variables que el resto */
         .gift-item img {
             width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); object-fit: cover;
         }
         .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
 
+        /* --- GPS --- */
         .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
         #mapa { height: 450px; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 30px 0; }
         
@@ -134,9 +144,11 @@
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
         .btn { padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.95rem; }
         .btn-wa { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
+        .btn-wa:hover { transform: translateY(-3px); }
         .btn-gold { background: var(--price-gold); color: white; }
         .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
 
+        /* --- PANEL ADMIN MODERNO --- */
         #adminPanel {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: white; padding: 30px; border-radius: 25px; z-index: 10000;
@@ -241,6 +253,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script>
+        // Configuración Firebase (la tuya)
         const firebaseConfig = {
             apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
             authDomain: "pan-de-yuca.firebaseapp.com",
@@ -254,6 +267,7 @@
         const db = firebase.database();
         const rutaRef = db.ref('ubicacion_ruta');
 
+        // Mapa Setup
         const map = L.map('mapa', { zoomControl: false }).setView([-1.024, -79.46], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         const marker = L.marker([-1.024, -79.46], { 
@@ -262,15 +276,16 @@
 
         function centrarMapa() { map.flyTo(marker.getLatLng(), 17); }
         
-        // FUNCIÓN CORREGIDA
+        // --- CAMBIO ÚNICO AQUÍ ---
         function abrirGmaps() { 
             const lat = marker.getLatLng().lat;
             const lng = marker.getLatLng().lng;
-            window.open(`https://www.google.com/maps?q=${lat},${lng}`, '_blank'); 
+            window.open("https://www.google.com/maps?q=" + lat + "," + lng, "_blank"); 
         }
 
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado."); }
 
+        // GPS Sync
         rutaRef.on('value', snap => {
             const d = snap.val();
             const dot = document.getElementById('dot');
@@ -288,6 +303,8 @@
             }
         });
 
+        // Admin
+        let watchId = null;
         function abrirAdmin() { if(prompt("Acceso Admin:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
         function iniciarRuta() {
             if (navigator.geolocation) {
@@ -303,6 +320,7 @@
             alert("Ruta GPS detenida.");
         }
 
+        // Likes
         function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
         db.ref('likes').on('value', s => document.getElementById('likes').innerText = s.val() || 0);
     </script>
