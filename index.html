@@ -148,7 +148,7 @@
         .btn-gold { background: var(--price-gold); color: white; }
         .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
 
-        /* --- PANEL ADMIN MODERNO --- */
+        /* --- PANEL ADMIN --- */
         #adminPanel {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: white; padding: 30px; border-radius: 25px; z-index: 10000;
@@ -253,7 +253,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script>
-        // Configuración Firebase (la tuya)
         const firebaseConfig = {
             apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
             authDomain: "pan-de-yuca.firebaseapp.com",
@@ -267,60 +266,89 @@
         const db = firebase.database();
         const rutaRef = db.ref('ubicacion_ruta');
 
-        // Mapa Setup
-        const map = L.map('mapa', { zoomControl: false }).setView([-1.024, -79.46], 15);
+        // MAPA: Iniciamos sin coordenadas fijas para evitar el salto al recargar
+        const map = L.map('mapa', { zoomControl: false }).setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        const marker = L.marker([-1.024, -79.46], { 
+        
+        const marker = L.marker([0, 0], { 
             icon: L.divIcon({ html: '<div id="camion" style="font-size:40px; transition:0.3s;">🚚</div>', className: 'none' }) 
         }).addTo(map);
 
-        function centrarMapa() { map.flyTo(marker.getLatLng(), 17); }
+        function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
         
-        // --- CAMBIO ÚNICO AQUÍ ---
         function abrirGmaps() { 
-            const lat = marker.getLatLng().lat;
-            const lng = marker.getLatLng().lng;
-            window.open("https://www.google.com/maps?q=" + lat + "," + lng, "_blank"); 
+            const pos = marker.getLatLng();
+            window.open(`https://www.google.com/maps?q=${pos.lat},${pos.lng}`, '_blank'); 
         }
 
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado."); }
 
-        // GPS Sync
+        // SINCRONIZACIÓN: Carga inmediata y seguimiento del marcador
         rutaRef.on('value', snap => {
             const d = snap.val();
             const dot = document.getElementById('dot');
             const txt = document.getElementById('estadoTxt');
-            if(d && d.estado === 'activo'){
-                marker.setLatLng([d.lat, d.lon]);
+            
+            if(d && d.lat && d.lon){
+                const nuevaPos = [d.lat, d.lon];
+                marker.setLatLng(nuevaPos);
+                
+                // Si el mapa está en el origen (recarga), se mueve a la última posición guardada
+                if (map.getCenter().lat === 0) {
+                    map.setView(nuevaPos, 17);
+                }
+
                 document.getElementById('camion').style.transform = `rotate(${d.heading || 0}deg)`;
-                dot.style.background = "#22C55E";
-                dot.style.boxShadow = "0 0 10px #22C55E";
-                txt.innerText = "¡ESTAMOS REPARTIENDO!";
-            } else {
-                dot.style.background = "#EF4444";
-                dot.style.boxShadow = "0 0 10px #EF4444";
-                txt.innerText = "RUTA CERRADA";
+                
+                if(d.estado === 'activo'){
+                    dot.style.background = "#22C55E";
+                    dot.style.boxShadow = "0 0 10px #22C55E";
+                    txt.innerText = "¡ESTAMOS REPARTIENDO!";
+                } else {
+                    dot.style.background = "#EF4444";
+                    dot.style.boxShadow = "0 0 10px #EF4444";
+                    txt.innerText = "RUTA CERRADA";
+                }
             }
         });
 
-        // Admin
+        // ADMIN: GPS de alta precisión y prevención de suspensión (WakeLock)
         let watchId = null;
+        let wakeLock = null;
+
         function abrirAdmin() { if(prompt("Acceso Admin:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
-        function iniciarRuta() {
+        
+        async function iniciarRuta() {
             if (navigator.geolocation) {
+                // Prevenir que la pantalla se apague/suspenda el proceso
+                try {
+                    if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); }
+                } catch (err) { console.log("WakeLock no activo"); }
+
                 watchId = navigator.geolocation.watchPosition(pos => {
-                    rutaRef.set({ lat: pos.coords.latitude, lon: pos.coords.longitude, estado: 'activo', heading: pos.coords.heading || 0 });
-                }, null, { enableHighAccuracy: true });
-                alert("Ruta GPS iniciada.");
+                    rutaRef.update({ 
+                        lat: pos.coords.latitude, 
+                        lon: pos.coords.longitude, 
+                        estado: 'activo', 
+                        heading: pos.coords.heading || 0,
+                        lastUpdate: Date.now()
+                    });
+                }, null, { 
+                    enableHighAccuracy: true, // Ubicación exacta por satélite
+                    timeout: 5000, 
+                    maximumAge: 0 
+                });
+                alert("Ruta GPS iniciada con Alta Precisión.");
             }
         }
+
         function detenerRuta() {
             if(watchId) navigator.geolocation.clearWatch(watchId);
+            if(wakeLock) { wakeLock.release(); wakeLock = null; }
             rutaRef.update({ estado: 'cerrado' });
             alert("Ruta GPS detenida.");
         }
 
-        // Likes
         function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
         db.ref('likes').on('value', s => document.getElementById('likes').innerText = s.val() || 0);
     </script>
