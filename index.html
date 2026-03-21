@@ -14,10 +14,9 @@
         :root {
             --gold-gradient: linear-gradient(135deg, #c0a16c 0%, #b39158 100%);
             --price-gold: #b5955b;
-            --brand-yellow: #f2b705; /* El amarillo de branding original */
+            --brand-yellow: #f2b705; 
             --font-fancy: 'Dancing Script', cursive;
             --paper-bg: #fdfbf2;
-            /* Definimos el marco uniforme para reutilizarlo */
             --gold-frame: 5px solid var(--price-gold);
             --gold-shadow: 0 10px 20px rgba(181, 149, 91, 0.3);
         }
@@ -44,11 +43,10 @@
             position: relative;
         }
 
-        /* --- BRANDING DE ALTO NIVEL --- */
         .branding-section { text-align: center; margin-bottom: 50px; }
         .main-logo {
             width: 160px; height: 160px; background: white;
-            border-radius: 50%; border: 6px solid var(--brand-yellow); /* Branding original */
+            border-radius: 50%; border: 6px solid var(--brand-yellow);
             padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: 0.5s; object-fit: cover;
         }
@@ -61,7 +59,6 @@
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
 
-        /* --- ESTRUCTURA GRID --- */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1.2fr 1fr;
@@ -69,7 +66,6 @@
             align-items: center;
         }
 
-        /* --- TARJETAS DE PRODUCTO CON EFECTOS --- */
         .product-card {
             text-align: center;
             padding: 20px;
@@ -80,7 +76,6 @@
         }
         .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.5); }
         
-        /* Shimmer Effect */
         .product-card::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
@@ -88,21 +83,19 @@
         }
         .product-card:hover::before { left: 150%; }
 
-        /* APLICACIÓN DEL MARCO DORADO UNIFORME */
         .framed-img {
             width: 100%;
-            max-width: 170px; /* Tamaño uniforme */
+            max-width: 170px;
             height: auto;
             object-fit: cover;
-            border-radius: 12px; /* Mismo redondeado */
-            border: var(--gold-frame); /* Mismo marco */
-            box-shadow: var(--gold-shadow); /* Misma sombra */
+            border-radius: 12px;
+            border: var(--gold-frame);
+            box-shadow: var(--gold-shadow);
         }
 
         .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
         .prod-info span { font-size: 1rem; color: #777; font-weight: 700; }
 
-        /* --- PRECIOS ESTILO IMAGEN ORIGINAL --- */
         .price-tag {
             background: var(--price-gold);
             color: white; width: 85px; height: 85px; border-radius: 50%;
@@ -113,7 +106,6 @@
         .price-tag big { font-size: 1.5rem; }
         .price-tag small { font-size: 0.6rem; letter-spacing: 1px; }
 
-        /* --- PROMO IRRESISTIBLE --- */
         .promo-box {
             background: white; border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -128,15 +120,31 @@
         .promo-content { padding: 30px 20px; }
         .gift-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
         
-        /* Imágenes de regalo, ahora comparten las mismas variables que el resto */
         .gift-item img {
             width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); object-fit: cover;
         }
         .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
 
-        /* --- GPS --- */
+        /* GPS SECTION CON CONTENEDOR DE ROTACIÓN */
         .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
-        #mapa { height: 450px; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 30px 0; }
+        
+        /* Contenedor padre para que el mapa no se salga al rotar */
+        #map-container { 
+            width: 100%; 
+            height: 450px; 
+            margin: 30px 0; 
+            border-radius: 20px; 
+            border: 6px solid white; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            position: relative;
+        }
+
+        #mapa { 
+            width: 100%; 
+            height: 100%; 
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* Rotación suave */
+        }
         
         .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 12px 25px; background: white; border-radius: 50px; font-weight: 800; border: 1px solid #eee; }
         .dot { width: 14px; height: 14px; border-radius: 50%; background: #EF4444; }
@@ -148,7 +156,6 @@
         .btn-gold { background: var(--price-gold); color: white; }
         .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
 
-        /* --- PANEL ADMIN --- */
         #adminPanel {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: white; padding: 30px; border-radius: 25px; z-index: 10000;
@@ -231,7 +238,9 @@
             </div>
             <h2 style="font-family: var(--font-fancy); font-size: 3rem; color: #b39158; margin: 15px 0 0;">Sigue nuestra ruta en vivo 🚚</h2>
             
-            <div id="mapa"></div>
+            <div id="map-container">
+                <div id="mapa"></div>
+            </div>
             
             <div class="btn-group">
                 <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ Ordenar WhatsApp</a>
@@ -266,12 +275,15 @@
         const db = firebase.database();
         const rutaRef = db.ref('ubicacion_ruta');
 
-        // MAPA: Iniciamos sin coordenadas fijas para evitar el salto al recargar
-        const map = L.map('mapa', { zoomControl: false }).setView([0, 0], 2);
+        // MAPA CONFIG
+        const map = L.map('mapa', { zoomControl: false, dragging: true, touchZoom: true, scrollWheelZoom: false }).setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         
-        const marker = L.marker([0, 0], { 
-            icon: L.divIcon({ html: '<div id="camion" style="font-size:40px; transition:0.3s;">🚚</div>', className: 'none' }) 
+        let marker = L.marker([0, 0], { 
+            icon: L.divIcon({ 
+                html: '<div id="camion" style="font-size:40px; transition: none;">🚚</div>', 
+                className: 'none' 
+            }) 
         }).addTo(map);
 
         function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
@@ -283,27 +295,39 @@
 
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado."); }
 
-        // SINCRONIZACIÓN: Carga inmediata y seguimiento del marcador
+        // SINCRONIZACIÓN Y ROTACIÓN DE MAPA
         rutaRef.on('value', snap => {
             const d = snap.val();
             const dot = document.getElementById('dot');
             const txt = document.getElementById('estadoTxt');
+            const mapaDiv = document.getElementById('mapa');
+            const camionEl = document.getElementById('camion');
             
             if(d && d.lat && d.lon){
-                const nuevaPos = [d.lat, d.lon];
+                const nuevaPos = L.latLng(d.lat, d.lon);
                 marker.setLatLng(nuevaPos);
                 
-                // Si el mapa está en el origen (recarga), se mueve a la última posición guardada
                 if (map.getCenter().lat === 0) {
                     map.setView(nuevaPos, 17);
                 }
 
-                document.getElementById('camion').style.transform = `rotate(${d.heading || 0}deg)`;
+                // --- LÓGICA DE ALINEACIÓN GPS ---
+                const rumbo = d.heading || 0;
+                // Rotamos el mapa en sentido contrario al rumbo para que la flecha siempre mire arriba
+                mapaDiv.style.transform = `rotate(${-rumbo}deg)`;
                 
+                // Rotamos el camión de vuelta para que se vea derecho respecto al mapa girado
+                if(camionEl) {
+                    camionEl.style.transform = `rotate(${rumbo}deg)`;
+                }
+                
+                // Centrado automático suave si está activo para modo navegación
+                if(d.estado === 'activo') map.panTo(nuevaPos);
+
                 if(d.estado === 'activo'){
                     dot.style.background = "#22C55E";
                     dot.style.boxShadow = "0 0 10px #22C55E";
-                    txt.innerText = "¡YA ESTAMOS HORNEANDO!";
+                    txt.innerText = "¡ESTAMOS REPARTIENDO!";
                 } else {
                     dot.style.background = "#EF4444";
                     dot.style.boxShadow = "0 0 10px #EF4444";
@@ -312,7 +336,7 @@
             }
         });
 
-        // ADMIN: GPS de alta precisión y prevención de suspensión (WakeLock)
+        // ADMIN: GPS Y WAKELOCK
         let watchId = null;
         let wakeLock = null;
 
@@ -320,10 +344,9 @@
         
         async function iniciarRuta() {
             if (navigator.geolocation) {
-                // Prevenir que la pantalla se apague/suspenda el proceso
                 try {
                     if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); }
-                } catch (err) { console.log("WakeLock no activo"); }
+                } catch (err) { console.log("WakeLock error"); }
 
                 watchId = navigator.geolocation.watchPosition(pos => {
                     rutaRef.update({ 
@@ -333,12 +356,14 @@
                         heading: pos.coords.heading || 0,
                         lastUpdate: Date.now()
                     });
-                }, null, { 
-                    enableHighAccuracy: true, // Ubicación exacta por satélite
+                }, (err) => {
+                    alert("Error GPS. Activa la ubicación.");
+                }, { 
+                    enableHighAccuracy: true, 
                     timeout: 5000, 
                     maximumAge: 0 
                 });
-                alert("Ruta GPS iniciada con Alta Precisión.");
+                alert("Navegación iniciada.");
             }
         }
 
@@ -346,7 +371,7 @@
             if(watchId) navigator.geolocation.clearWatch(watchId);
             if(wakeLock) { wakeLock.release(); wakeLock = null; }
             rutaRef.update({ estado: 'cerrado' });
-            alert("Ruta GPS detenida.");
+            alert("Ruta detenida.");
         }
 
         function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
@@ -354,4 +379,3 @@
     </script>
 </body>
 </html>
-
