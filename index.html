@@ -125,7 +125,7 @@
         }
         .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
 
-        /* --- GPS SECTION MEJORADA --- */
+        /* GPS SECTION ESTABILIZADA */
         .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
         
         #map-container { 
@@ -137,18 +137,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
             overflow: hidden; 
             position: relative;
-            background: #e5e3df; /* Color base de mapas */
         }
 
         #mapa { 
             width: 100%; 
             height: 100%; 
-            /* El truco: Escala 1.5 para que al rotar no se vean huecos */
-            transform: scale(1.5);
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Escala aumentada para cubrir rotación */
+            transform: scale(2.0); 
             transform-origin: center center;
+            transition: transform 0.8s ease-in-out;
         }
         
+        /* Ajuste para que el icono no rote con el mapa */
+        .camion-icon { 
+            font-size: 40px; 
+            transition: transform 0.8s ease-in-out;
+            display: inline-block;
+        }
+
         .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 12px 25px; background: white; border-radius: 50px; font-weight: 800; border: 1px solid #eee; }
         .dot { width: 14px; height: 14px; border-radius: 50%; background: #EF4444; }
 
@@ -279,12 +285,17 @@
         const rutaRef = db.ref('ubicacion_ruta');
 
         // MAPA CONFIG
-        const map = L.map('mapa', { zoomControl: false, dragging: true, touchZoom: true, scrollWheelZoom: false }).setView([0, 0], 2);
+        const map = L.map('mapa', { 
+            zoomControl: false, 
+            scrollWheelZoom: false,
+            dragging: true 
+        }).setView([0, 0], 2);
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         
         let marker = L.marker([0, 0], { 
             icon: L.divIcon({ 
-                html: '<div id="camion" style="font-size:40px; transition: none;">🚚</div>', 
+                html: '<div id="camion" class="camion-icon">🚚</div>', 
                 className: 'none' 
             }) 
         }).addTo(map);
@@ -298,7 +309,7 @@
 
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado."); }
 
-        // SINCRONIZACIÓN Y ROTACIÓN ESTABLE
+        // SINCRONIZACIÓN CON CONTROL DE EJES
         rutaRef.on('value', snap => {
             const d = snap.val();
             const dot = document.getElementById('dot');
@@ -314,11 +325,12 @@
                     map.setView(nuevaPos, 17);
                 }
 
-                // --- LÓGICA DE ROTACIÓN SIN BORDES VACÍOS ---
+                // --- ROTACIÓN ESTABLE ---
+                // Aplicamos escala 200% y rotación inversa para la vista
                 const rumbo = d.heading || 0;
-                // Escala 1.5 es vital para que al rotar no se vea el fondo blanco
-                mapaDiv.style.transform = `scale(1.5) rotate(${-rumbo}deg)`;
+                mapaDiv.style.transform = `scale(2.0) rotate(${-rumbo}deg)`;
                 
+                // El camión siempre mira "arriba" respecto al usuario
                 if(camionEl) {
                     camionEl.style.transform = `rotate(${rumbo}deg)`;
                 }
@@ -358,7 +370,7 @@
                         lastUpdate: Date.now()
                     });
                 }, (err) => {
-                    alert("Error GPS. Activa la ubicación.");
+                    alert("Error GPS.");
                 }, { 
                     enableHighAccuracy: true, 
                     timeout: 5000, 
