@@ -3,151 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Secreto de Manabí - GPS Estable</title>
+    <title>El Secreto de Manabí - Menú y GPS</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
-        body { margin: 0; padding: 20px; font-family: 'Open Sans', sans-serif; background: #d4d0c1; }
-        .menu-paper { max-width: 1000px; margin: auto; background: #fdfbf2; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        
-        /* Contenedor del mapa */
-        #map-container { 
-            width: 100%; 
-            height: 450px; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            border: 5px solid white;
+        :root {
+            --gold-gradient: linear-gradient(135deg, #c0a16c 0%, #b39158 100%);
+            --price-gold: #b5955b;
+            --brand-yellow: #f2b705; 
+            --font-fancy: 'Dancing Script', cursive;
+            --paper-bg: #fdfbf2;
+            --gold-frame: 5px solid var(--price-gold);
+            --gold-shadow: 0 10px 20px rgba(181, 149, 91, 0.3);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #d4d0c1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-paper {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--paper-bg) url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            padding: 50px 30px;
+            border-radius: 15px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            border: 1px solid #c4c1af;
             position: relative;
-            z-index: 1;
+        }
+
+        .branding-section { text-align: center; margin-bottom: 50px; }
+        .main-logo {
+            width: 160px; height: 160px; background: white;
+            border-radius: 50%; border: 6px solid var(--brand-yellow);
+            padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: 0.5s; object-fit: cover;
+        }
+
+        .header h1 { 
+            font-family: var(--font-fancy); color: #b39158; 
+            font-size: clamp(2.5rem, 6vw, 4rem); margin: 0; 
+        }
+        .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .product-card { text-align: center; padding: 20px; border-radius: 20px; transition: 0.4s; }
+        .product-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.5); }
+
+        .framed-img {
+            width: 100%; max-width: 170px; border-radius: 12px;
+            border: var(--gold-frame); box-shadow: var(--gold-shadow);
+        }
+
+        .price-tag {
+            background: var(--price-gold); color: white; width: 85px; height: 85px; 
+            border-radius: 50%; display: flex; flex-direction: column; 
+            justify-content: center; margin: 15px auto; font-weight: 800;
+        }
+
+        .promo-box {
+            background: white; border-radius: 20px; border: 2px solid #eee;
+            text-align: center; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .promo-header { background: var(--gold-gradient); color: white; padding: 20px; }
+        .promo-header h2 { font-family: var(--font-fancy); font-size: 2.8rem; margin: 0; }
+
+        /* GPS SECTION ESTABLE */
+        .gps-section { margin-top: 60px; border-top: 3px dashed #ccc; padding-top: 40px; text-align: center; }
+        #map-container { 
+            width: 100%; height: 450px; border-radius: 20px; 
+            border: 6px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 25px 0; overflow: hidden; position: relative; z-index: 10;
         }
         #mapa { width: 100%; height: 100%; }
 
-        /* Estilo del icono del camión */
-        .truck-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 50px;
-        }
-        .truck-emoji {
-            font-size: 40px;
-            transition: transform 0.5s ease; /* Giro suave */
-            display: inline-block;
+        .truck-emoji { font-size: 45px; transition: transform 0.5s ease; display: inline-block; }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 15px 25px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .btn-wa { background: #2563eb; color: white; }
+        .btn-gold { background: var(--price-gold); color: white; }
+
+        #adminPanel {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; border-radius: 20px; z-index: 9999;
+            border: 4px solid var(--brand-yellow); display: none; box-shadow: 0 0 100px rgba(0,0,0,0.5);
         }
 
-        .controls { text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
-        .btn { padding: 12px 20px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; background: #b5955b; color: white; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .promo-box { order: -1; } }
     </style>
 </head>
 <body>
 
-<div class="menu-paper">
-    <h2 style="text-align:center; color:#b5955b;">Sigue nuestro sabor en vivo 🚚</h2>
-    
-    <div id="map-container">
-        <div id="mapa"></div>
+    <div class="menu-paper">
+        <div class="branding-section">
+            <img src="logo.png" alt="Logo" class="main-logo">
+            <header class="header">
+                <h1>Pan de Yuca Manabita</h1>
+                <p>"Directamente del horno a tu paladar"</p>
+            </header>
+        </div>
+
+        <div class="content-grid">
+            <div class="column">
+                <div class="product-card">
+                    <img src="funda.jpeg" class="framed-img">
+                    <div class="price-tag"><b>$1.00</b><small>USD</small></div>
+                </div>
+                <div class="product-card">
+                    <img src="combo1.jpeg" class="framed-img">
+                    <div class="price-tag"><b>$1.50</b><small>USD</small></div>
+                </div>
+            </div>
+
+            <div class="promo-box">
+                <div class="promo-header">
+                    <h2>¡Llévate!</h2>
+                    <p>Por la compra de 5 fundas</p>
+                </div>
+                <div style="padding: 20px;">
+                    <img src="regalo-yogurt.jpeg" style="width:100px; border-radius:10px;">
+                    <p><b>YOGURT GRATIS</b></p>
+                </div>
+                <div onclick="abrirAdmin()" style="height:40px; cursor:pointer;"></div>
+            </div>
+
+            <div class="column">
+                <div class="product-card">
+                    <img src="yogurt.jpeg" class="framed-img">
+                    <div class="price-tag"><b>$0.75</b><small>USD</small></div>
+                </div>
+                <div class="product-card">
+                    <img src="combo2.jpeg" class="framed-img">
+                    <div class="price-tag"><b>$2.00</b><small>USD</small></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gps-section">
+            <h2 style="font-family: var(--font-fancy); font-size: 2.5rem; color: #b39158;">Ruta en tiempo real 🚚</h2>
+            <div id="map-container">
+                <div id="mapa"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-gold" onclick="centrarMapa()">🎯 Centrar Camión</button>
+                <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ WhatsApp</a>
+            </div>
+        </div>
     </div>
 
-    <div class="controls">
-        <button class="btn" onclick="centrarEnCamion()">🎯 Centrar en Camión</button>
-        <button class="btn" style="background:#2563eb" onclick="abrirAdmin()">⚙️ Admin</button>
+    <div id="adminPanel">
+        <h3>Panel GPS</h3>
+        <button class="btn btn-wa" onclick="iniciarRuta()" style="background:green; margin-bottom:10px; width:100%">INICIAR TRANSMISIÓN</button>
+        <button class="btn btn-wa" onclick="detenerRuta()" style="background:red; width:100%">DETENER RUTA</button>
+        <button onclick="document.getElementById('adminPanel').style.display='none'" style="margin-top:20px; width:100%">Cerrar</button>
     </div>
-</div>
 
-<div id="adminPanel" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; pading:20px; z-index:100; border:2px solid gold; padding:20px; border-radius:10px; text-align:center;">
-    <h3>Panel de Ruta</h3>
-    <button class="btn" style="background:green" onclick="iniciarRuta()">▶️ Iniciar GPS</button>
-    <button class="btn" style="background:red" onclick="detenerRuta()">⏹️ Detener</button>
-    <button onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
+            authDomain: "pan-de-yuca.firebaseapp.com",
+            databaseURL: "https://pan-de-yuca-default-rtdb.firebaseio.com",
+            projectId: "pan-de-yuca",
+            storageBucket: "pan-de-yuca.firebasestorage.app",
+            messagingSenderId: "146026389755",
+            appId: "1:146026389755:web:5148691db252f56215d05e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const rutaRef = db.ref('ubicacion_ruta');
 
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
-        authDomain: "pan-de-yuca.firebaseapp.com",
-        databaseURL: "https://pan-de-yuca-default-rtdb.firebaseio.com",
-        projectId: "pan-de-yuca",
-        storageBucket: "pan-de-yuca.firebasestorage.app",
-        messagingSenderId: "146026389755",
-        appId: "1:146026389755:web:5148691db252f56215d05e"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const rutaRef = db.ref('ubicacion_ruta');
+        // MAPA CONFIG
+        const map = L.map('mapa', { zoomControl: false }).setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        const truckIcon = L.divIcon({
+            html: '<div class="truck-emoji" id="camion-img">🚚</div>',
+            className: 'none', iconSize: [50, 50], iconAnchor: [25, 25]
+        });
+        let marker = L.marker([0, 0], { icon: truckIcon }).addTo(map);
 
-    // Inicializar mapa sin rotaciones raras de CSS para mantener estabilidad
-    const map = L.map('mapa', { zoomControl: true }).setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19
-    }).addTo(map);
+        function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
 
-    // Marcador con ANCLAJE CENTRAL PERFECTO
-    const truckIcon = L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div class="truck-wrapper"><div id="truck-img" class="truck-emoji">🚚</div></div>`,
-        iconSize: [50, 50],
-        iconAnchor: [25, 25] // Esto hace que el camión NO se mueva al hacer zoom
-    });
+        rutaRef.on('value', snap => {
+            const d = snap.val();
+            if(d && d.lat){
+                const pos = [d.lat, d.lon];
+                marker.setLatLng(pos);
+                if(map.getCenter().lat === 0) map.setView(pos, 17);
+                
+                // Rotar camión según rumbo
+                const el = document.getElementById('camion-img');
+                if(el) el.style.transform = `rotate(${d.heading || 0}deg)`;
+            }
+        });
 
-    let marker = L.marker([0, 0], { icon: truckIcon }).addTo(map);
+        // ADMIN
+        let watchId = null;
+        function abrirAdmin() { if(prompt("Pass:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
 
-    function centrarEnCamion() {
-        map.flyTo(marker.getLatLng(), 18);
-    }
-
-    // Escuchar Firebase
-    rutaRef.on('value', snap => {
-        const data = snap.val();
-        if(!data) return;
-
-        const pos = [data.lat, data.lon];
-        const heading = data.heading || 0;
-
-        // 1. Actualizar posición del marcador
-        marker.setLatLng(pos);
-
-        // 2. Rotar SOLO el emoji (no el mapa) para mantener estabilidad táctil
-        const truckImg = document.getElementById('truck-img');
-        if(truckImg) {
-            // El emoji de camión 🚚 apunta a la derecha, sumamos 90 si es necesario
-            truckImg.style.transform = `rotate(${heading}deg)`;
+        function iniciarRuta() {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(p => {
+                    rutaRef.update({
+                        lat: p.coords.latitude,
+                        lon: p.coords.longitude,
+                        heading: p.coords.heading || 0,
+                        estado: 'activo'
+                    });
+                }, null, { enableHighAccuracy: true });
+                alert("GPS en vivo!");
+            }
         }
 
-        // 3. Seguimiento suave si está activo
-        if(data.estado === 'activo' && map.getCenter().lat === 0) {
-            map.setView(pos, 17);
+        function detenerRuta() {
+            if(watchId) navigator.geolocation.clearWatch(watchId);
+            rutaRef.update({ estado: 'cerrado' });
+            alert("Ruta apagada.");
         }
-    });
-
-    // --- LÓGICA DE ADMIN (EL CAMIÓN) ---
-    let watchId = null;
-    function abrirAdmin() { if(prompt("Pass:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
-
-    function iniciarRuta() {
-        if (navigator.geolocation) {
-            watchId = navigator.geolocation.watchPosition(p => {
-                rutaRef.update({
-                    lat: p.coords.latitude,
-                    lon: p.coords.longitude,
-                    heading: p.coords.heading || 0,
-                    estado: 'activo',
-                    lastUpdate: Date.now()
-                });
-            }, null, { enableHighAccuracy: true, maximumAge: 0 });
-            alert("Transmitiendo ubicación exacta...");
-        }
-    }
-
-    function detenerRuta() {
-        if(watchId) navigator.geolocation.clearWatch(watchId);
-        rutaRef.update({ estado: 'cerrado' });
-        alert("Ruta terminada.");
-    }
-</script>
+    </script>
 </body>
 </html>
