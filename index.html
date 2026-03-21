@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Secreto de Manabí - Menú Premium Uniforme</title>
+    <title>El Secreto de Manabí - GPS Premium</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <style>
         :root {
             --gold-gradient: linear-gradient(135deg, #c0a16c 0%, #b39158 100%);
@@ -17,259 +14,73 @@
             --brand-yellow: #f2b705; 
             --font-fancy: 'Dancing Script', cursive;
             --paper-bg: #fdfbf2;
-            --gold-frame: 5px solid var(--price-gold);
-            --gold-shadow: 0 10px 20px rgba(181, 149, 91, 0.3);
         }
 
-        * { box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background: #d4d0c1; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .menu-paper { width: 100%; max-width: 1000px; background: var(--paper-bg); padding: 40px 20px; border-radius: 15px; box-shadow: 0 30px 80px rgba(0,0,0,0.3); position: relative; }
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: #d4d0c1;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .menu-paper {
-            width: 100%;
-            max-width: 1000px;
-            background: var(--paper-bg) url('https://www.transparenttextures.com/patterns/aged-paper.png');
-            padding: 50px 30px;
-            border-radius: 15px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
-            border: 1px solid #c4c1af;
-            position: relative;
-        }
-
-        .branding-section { text-align: center; margin-bottom: 50px; }
-        .main-logo {
-            width: 160px; height: 160px; background: white;
-            border-radius: 50%; border: 6px solid var(--brand-yellow);
-            padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: 0.5s; object-fit: cover;
-        }
-        .main-logo:hover { transform: scale(1.1) rotate(5deg); }
-
-        .header h1 { 
-            font-family: var(--font-fancy); color: #b39158; 
-            font-size: clamp(2.5rem, 6vw, 4rem); margin: 0; 
-        }
-        .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
-        .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .product-card {
-            text-align: center;
-            padding: 20px;
-            transition: all 0.4s ease;
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.5); }
-        
-        .product-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg); transition: 0.5s;
-        }
-        .product-card:hover::before { left: 150%; }
-
-        .framed-img {
-            width: 100%;
-            max-width: 170px;
-            height: auto;
-            object-fit: cover;
-            border-radius: 12px;
-            border: var(--gold-frame);
-            box-shadow: var(--gold-shadow);
-        }
-
-        .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
-        .prod-info span { font-size: 1rem; color: #777; font-weight: 700; }
-
-        .price-tag {
-            background: var(--price-gold);
-            color: white; width: 85px; height: 85px; border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center;
-            margin: 15px auto; font-weight: 800; border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 5px 15px rgba(181, 149, 91, 0.4);
-        }
-        .price-tag big { font-size: 1.5rem; }
-        .price-tag small { font-size: 0.6rem; letter-spacing: 1px; }
-
-        .promo-box {
-            background: white; border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            border: 2px solid #eee; overflow: hidden;
-            text-align: center; transition: 0.4s;
-        }
-        .promo-box:hover { transform: scale(1.03); }
-        .promo-header { background: var(--gold-gradient); color: white; padding: 20px; }
-        .promo-header h4 { margin: 0; font-size: 1.1rem; letter-spacing: 2px; font-weight: 800; }
-        .promo-header h2 { font-family: var(--font-fancy); font-size: 3.2rem; margin: 5px 0; }
-        
-        .promo-content { padding: 30px 20px; }
-        .gift-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        
-        .gift-item img {
-            width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); object-fit: cover;
-        }
-        .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
-
-        /* GPS SECTION ESTABILIZADA */
-        .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
-        
+        /* CONTENEDOR GPS ESTABILIZADO */
+        .gps-section { margin-top: 40px; text-align: center; }
         #map-container { 
             width: 100%; 
             height: 450px; 
-            margin: 30px 0; 
+            margin: 20px 0; 
             border-radius: 20px; 
             border: 6px solid white; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
             overflow: hidden; 
             position: relative;
+            background: #e5e3df;
         }
+        #mapa { width: 100%; height: 100%; touch-action: none; }
 
-        #mapa { 
-            width: 100%; 
-            height: 100%; 
-            /* Escala aumentada para cubrir rotación */
-            transform: scale(2.0); 
-            transform-origin: center center;
-            transition: transform 0.8s ease-in-out;
-        }
+        .camion-icon { font-size: 45px; text-align: center; line-height: 1; }
         
-        /* Ajuste para que el icono no rote con el mapa */
-        .camion-icon { 
-            font-size: 40px; 
-            transition: transform 0.8s ease-in-out;
-            display: inline-block;
-        }
-
-        .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 12px 25px; background: white; border-radius: 50px; font-weight: 800; border: 1px solid #eee; }
-        .dot { width: 14px; height: 14px; border-radius: 50%; background: #EF4444; }
-
-        .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
-        .btn { padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.95rem; }
-        .btn-wa { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
-        .btn-wa:hover { transform: translateY(-3px); }
+        .status-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: white; border-radius: 50px; font-weight: 800; margin-bottom: 15px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #EF4444; }
+        
+        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 12px 25px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; text-decoration: none; }
+        .btn-wa { background: #2563eb; color: white; }
         .btn-gold { background: var(--price-gold); color: white; }
-        .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
 
-        #adminPanel {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 30px; border-radius: 25px; z-index: 10000;
-            border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; box-shadow: 0 0 100px rgba(0,0,0,0.6);
-        }
-
-        @media (max-width: 900px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .promo-box { order: -1; margin-bottom: 30px; }
-        }
+        #adminPanel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 25px; z-index: 10000; display: none; border: 5px solid var(--brand-yellow); }
     </style>
 </head>
 <body>
 
     <div class="menu-paper">
-        <div class="branding-section">
-            <img src="logo.png" alt="Logo" class="main-logo">
-            <header class="header">
-                <h1>Pan de Yuca Manabita</h1>
-                <p>"Directamente del horno a tu paladar"</p>
-            </header>
-            <div class="section-title">Nuestros Precios</div>
-        </div>
-
-        <div class="content-grid">
-            <div class="column">
-                <div class="product-card">
-                    <img src="funda.jpeg" alt="Funda de Pan" class="framed-img">
-                    <div class="prod-info"><b>Funda de Pan</b><span>(4 unidades)</span></div>
-                    <div class="price-tag"><big>$1.00</big><small>USD</small></div>
-                </div>
-                <div class="product-card">
-                    <img src="combo1.jpeg" alt="Combo 1" class="framed-img">
-                    <div class="prod-info"><b>🔥 Combo 1</b><span>(4 Panes + Yogurt)</span></div>
-                    <div class="price-tag"><big>$1.50</big><small>USD</small></div>
-                </div>
-            </div>
-
-            <div class="promo-box">
-                <div class="promo-header">
-                    <h4>🎁 PROMO ESPECIAL POR LA COMPRA DE 5 FUNDAS</h4>
-                    <h2>¡Llévate!</h2>
-                </div>
-                <div class="promo-content">
-                    <div class="gift-container">
-                        <div class="gift-item">
-                            <img src="regalo-yogurt.jpeg" alt="2 Vasos Yogurt">
-                            <p>2 VASOS DE<br>YOGURT</p>
-                        </div>
-                        <div style="font-weight: 900; color: var(--price-gold); font-size: 1.8rem; margin: 10px 0;">ó</div>
-                        <div class="gift-item">
-                            <img src="regalo-funda.jpeg" alt="Funda Pan Extra">
-                            <p>1 FUNDA DE<br>PAN ADICIONAL</p>
-                        </div>
-                    </div>
-                    <div style="font-family: var(--font-fancy); font-size: 2.5rem; margin-top: 15px; color:#333">¡Gratis! 😍</div>
-                    <small style="color:#999">Por la compra de 5 fundas</small>
-                </div>
-                <div onclick="abrirAdmin()" style="height:30px; cursor:pointer;"></div>
-            </div>
-
-            <div class="column">
-                <div class="product-card">
-                    <img src="yogurt.jpeg" alt="Yogurt Artesanal" class="framed-img">
-                    <div class="prod-info"><b>Yogurt Artesanal</b><span>Vaso</span></div>
-                    <div class="price-tag"><big>$0.75</big><small>USD</small></div>
-                </div>
-                <div class="product-card">
-                    <img src="combo2.jpeg" alt="Combo 2" class="framed-img">
-                    <div class="prod-info"><b>🔥 Combo 2</b><span>(6 Panes + Yogurt)</span></div>
-                    <div class="price-tag"><big>$2.00</big><small>USD</small></div>
-                </div>
-            </div>
-        </div>
-
         <div class="gps-section">
             <div class="status-pill">
                 <div id="dot" class="dot"></div>
-                <span id="estadoTxt">Cargando estado...</span>
+                <span id="estadoTxt">Cargando GPS...</span>
             </div>
-            <h2 style="font-family: var(--font-fancy); font-size: 3rem; color: #b39158; margin: 15px 0 0;">Sigue nuestra ruta en vivo 🚚</h2>
+            <h2 style="font-family: var(--font-fancy); font-size: 2.5rem; color: #b39158;">Ruta en tiempo real 🚚</h2>
             
             <div id="map-container">
                 <div id="mapa"></div>
             </div>
             
             <div class="btn-group">
-                <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ Ordenar WhatsApp</a>
-                <button class="btn btn-gold" onclick="centrarMapa()">🎯 Centrar Mapa</button>
-                <button class="btn btn-outline" onclick="abrirGmaps()">🧭 Google Maps</button>
-                <button class="btn btn-outline" onclick="darLike()">❤️ <span id="likes">0</span></button>
-                <button class="btn btn-outline" onclick="compartir()">🔗 Compartir</button>
+                <button class="btn btn-gold" onclick="centrarMapa()">🎯 Centrar en Camión</button>
+                <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ Pedir por WhatsApp</a>
+                <div onclick="abrirAdmin()" style="width:40px; height:40px;"></div>
             </div>
         </div>
     </div>
 
     <div id="adminPanel">
-        <h2 style="font-family: var(--font-fancy); font-size: 2.2rem; color: var(--price-gold); margin-bottom: 20px;">Control de Ruta</h2>
-        <button class="btn btn-wa" style="width:100%; margin-bottom:10px; background:#22c55e" onclick="iniciarRuta()">▶️ INICIAR RUTA (GPS)</button>
-        <button class="btn btn-wa" style="width:100%; background:#ef4444" onclick="detenerRuta()">⏹️ DETENER RUTA</button>
-        <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
+        <h3>Panel de Control</h3>
+        <button onclick="iniciarRuta()" style="background:green; color:white; padding:10px; width:100%">INICIAR TRANSMISIÓN</button><br><br>
+        <button onclick="detenerRuta()" style="background:red; color:white; padding:10px; width:100%">DETENER RUTA</button><br><br>
+        <button onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/gh/Raruto/leaflet-rotate@master/dist/leaflet-rotate.js"></script>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
@@ -284,111 +95,88 @@
         const db = firebase.database();
         const rutaRef = db.ref('ubicacion_ruta');
 
-        // MAPA CONFIG
-        const map = L.map('mapa', { 
-            zoomControl: false, 
-            scrollWheelZoom: false,
-            dragging: true 
-        }).setView([0, 0], 2);
-        
+        // MAPA CON ROTACIÓN HABILITADA
+        const map = L.map('mapa', {
+            zoomControl: false,
+            rotate: true, // Habilita la rotación nativa
+            touchRotate: false // Evita que el usuario rote el mapa por accidente
+        }).setView([0, 0], 17);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        
-        let marker = L.marker([0, 0], { 
-            icon: L.divIcon({ 
-                html: '<div id="camion" class="camion-icon">🚚</div>', 
-                className: 'none' 
-            }) 
+
+        let marker = L.marker([0, 0], {
+            icon: L.divIcon({
+                html: '<div id="camion" class="camion-icon">🚚</div>',
+                className: 'none',
+                iconSize: [50, 50],
+                iconAnchor: [25, 25]
+            })
         }).addTo(map);
 
-        function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
-        
-        function abrirGmaps() { 
-            const pos = marker.getLatLng();
-            window.open(`https://www.google.com/maps?q=${pos.lat},${pos.lng}`, '_blank'); 
+        function centrarMapa() {
+            map.flyTo(marker.getLatLng(), 18, { duration: 1 });
         }
 
-        function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado."); }
+        let ultimoRumbo = 0;
 
-        // SINCRONIZACIÓN CON CONTROL DE EJES
         rutaRef.on('value', snap => {
             const d = snap.val();
+            if(!d) return;
+
+            const nuevaPos = L.latLng(d.lat, d.lon);
+            const rumbo = d.heading || 0;
+            
+            // Mover marcador
+            marker.setLatLng(nuevaPos);
+
+            // 1. ROTACIÓN DEL MAPA: Solo si el camión se está moviendo
+            // Rotamos el mapa de forma que el rumbo sea siempre el norte (arriba)
+            if (d.estado === 'activo') {
+                map.setBearing(360 - rumbo); 
+                map.panTo(nuevaPos);
+            }
+
+            // 2. CAMIÓN: Siempre mirando hacia arriba del teléfono
+            // Al rotar el mapa, el camión debe estar en 0 relativo al mapa para mirar arriba
+            const camionEl = document.getElementById('camion');
+            if(camionEl) camionEl.style.transform = `rotate(0deg)`;
+
+            // Interfaz
             const dot = document.getElementById('dot');
             const txt = document.getElementById('estadoTxt');
-            const mapaDiv = document.getElementById('mapa');
-            const camionEl = document.getElementById('camion');
-            
-            if(d && d.lat && d.lon){
-                const nuevaPos = L.latLng(d.lat, d.lon);
-                marker.setLatLng(nuevaPos);
-                
-                if (map.getCenter().lat === 0) {
-                    map.setView(nuevaPos, 17);
-                }
-
-                // --- ROTACIÓN ESTABLE ---
-                // Aplicamos escala 200% y rotación inversa para la vista
-                const rumbo = d.heading || 0;
-                mapaDiv.style.transform = `scale(2.0) rotate(${-rumbo}deg)`;
-                
-                // El camión siempre mira "arriba" respecto al usuario
-                if(camionEl) {
-                    camionEl.style.transform = `rotate(${rumbo}deg)`;
-                }
-                
-                if(d.estado === 'activo') map.panTo(nuevaPos);
-
-                if(d.estado === 'activo'){
-                    dot.style.background = "#22C55E";
-                    dot.style.boxShadow = "0 0 10px #22C55E";
-                    txt.innerText = "¡ESTAMOS REPARTIENDO!";
-                } else {
-                    dot.style.background = "#EF4444";
-                    dot.style.boxShadow = "0 0 10px #EF4444";
-                    txt.innerText = "RUTA CERRADA";
-                }
+            if(d.estado === 'activo'){
+                dot.style.background = "#22C55E";
+                txt.innerText = "¡ESTAMOS REPARTIENDO!";
+            } else {
+                dot.style.background = "#EF4444";
+                txt.innerText = "RUTA CERRADA";
+                map.setBearing(0); // Volver al norte normal si está cerrado
             }
         });
 
-        // ADMIN: GPS Y WAKELOCK
+        // ADMIN FUNCTIONS
         let watchId = null;
-        let wakeLock = null;
+        function abrirAdmin() { if(prompt("Pass:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
 
-        function abrirAdmin() { if(prompt("Acceso Admin:") === "panyuca.2026") document.getElementById('adminPanel').style.display='block'; }
-        
         async function iniciarRuta() {
             if (navigator.geolocation) {
-                try {
-                    if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); }
-                } catch (err) { console.log("WakeLock error"); }
-
                 watchId = navigator.geolocation.watchPosition(pos => {
-                    rutaRef.update({ 
-                        lat: pos.coords.latitude, 
-                        lon: pos.coords.longitude, 
-                        estado: 'activo', 
+                    rutaRef.update({
+                        lat: pos.coords.latitude,
+                        lon: pos.coords.longitude,
                         heading: pos.coords.heading || 0,
-                        lastUpdate: Date.now()
+                        estado: 'activo'
                     });
-                }, (err) => {
-                    alert("Error GPS.");
-                }, { 
-                    enableHighAccuracy: true, 
-                    timeout: 5000, 
-                    maximumAge: 0 
-                });
-                alert("Navegación iniciada.");
+                }, null, { enableHighAccuracy: true });
+                alert("GPS Transmitiendo...");
             }
         }
 
         function detenerRuta() {
             if(watchId) navigator.geolocation.clearWatch(watchId);
-            if(wakeLock) { wakeLock.release(); wakeLock = null; }
             rutaRef.update({ estado: 'cerrado' });
-            alert("Ruta detenida.");
+            alert("Ruta apagada.");
         }
-
-        function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
-        db.ref('likes').on('value', s => document.getElementById('likes').innerText = s.val() || 0);
     </script>
 </body>
 </html>
