@@ -31,7 +31,6 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            position: relative; /* Necesario para el logo fijo */
         }
 
         .menu-paper {
@@ -53,33 +52,29 @@
             align-items: center;
         }
 
-        /* --- CORRECCIÓN AZUL: Borde del Hero Cuadrado y Degradado Armonioso --- */
+        /* --- CORRECCIÓN AZUL: Contenedor del Hero Cuadrado y Armonioso --- */
         .hero-banner-container {
             position: relative;
             margin-bottom: 30px;
             padding: 15px;
-            /* Degradado dorado suave para el borde */
-            background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
-            border-radius: 20px; /* Esquinas redondeadas suaves */
+            background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%); /* Degradado suave */
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: inline-block;
         }
         
         .hero-image {
             width: 100%;
-            max-width: 500px; /* Tamaño controlado del héroe */
+            max-width: 500px;
             height: auto;
             object-fit: cover;
-            border-radius: 15px; /* Que coincida con el contenedor interno */
+            border-radius: 15px;
             
-            /* Efecto armonioso para suavizar el borde */
+            /* Suavizado para integración con el fondo */
             border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px); /* Desenfoque suave en los bordes */
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
-
-        /* Reemplazo del logo principal antiguo */
-        .main-logo { display: none; } /* Ocultamos el logo circular original */
 
         .header h1 { 
             font-family: var(--font-fancy); color: #b39158; 
@@ -87,7 +82,7 @@
         }
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         
-        /* CORRECCIÓN ROJA: Se ha eliminado el texto "Pan de Yuca Manabita" que estaba aquí */
+        /* CORRECCIÓN ROJA: El bloque que repetía "Pan de Yuca Manabita" se ha eliminado de aquí */
 
         .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
 
@@ -203,7 +198,7 @@
             border: 5px solid var(--brand-yellow);
             padding: 5px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 1000; /* Asegura que esté por encima de todo */
+            z-index: 1000; /* Asegura que esté por encima del contenido */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -218,7 +213,7 @@
             object-fit: cover;
         }
 
-        /* Texto Circular LEGITIMO únicamente, concordando tipografía */
+        /* Texto Circular "LEGÍTIMO" únicamente, concordando tipografía */
         .circular-text-overlay {
             position: absolute;
             top: -10px;
@@ -248,15 +243,13 @@
 </head>
 <body>
 
-    <!-- Logo Antiguo Fijo en la Esquina (Corrección Verde) -->
     <div class="corner-logo-badge">
         <img src="logo.png" alt="Logo Tradicional" class="main-logo-embedded">
-        <!-- Texto Redondo Dinámico LEGITIMO únicamente -->
         <svg class="circular-text-overlay" viewBox="0 0 160 160">
             <path id="circlePath" d="M 80, 80 m -65, 0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0" fill="transparent" />
             <text>
                 <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                    • LEGITIMO • LEGITIMO • LEGITIMO • LEGITIMO •
+                    • LEGÍTIMO • LEGÍTIMO • LEGÍTIMO • LEGÍTIMO •
                 </textPath>
             </text>
         </svg>
@@ -265,7 +258,6 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor Armonioso del Hero (Corrección Azul) -->
             <div class="hero-banner-container">
                 <img src="logo-hero.png" alt="Mascota Pan de Yuca Hero" class="hero-image">
             </div>
