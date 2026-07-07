@@ -50,27 +50,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
-        /* --- LOGO HERO (logo.png ahora es el Principal) --- */
+        /* --- LOGO HERO (Con borde dorado elegante y espaciado para LEGÍTIMO) --- */
         .hero-banner-container {
             position: relative;
+            margin-top: 25px;
             margin-bottom: 30px;
-            padding: 12px; /* Espacio extra para que respiren las letras periféricas */
+            padding: 15px; 
             background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
             border-radius: 50%; 
+            border: 3px solid var(--price-gold); /* Borde dorado integrado */
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: inline-block;
             width: 360px; 
             height: 360px; 
-            overflow: hidden;
         }
         
         .hero-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* CAMBIO CLAVE: Evita que el círculo corte las letras en los bordes */
+            object-fit: contain; 
             border-radius: 50%; 
+        }
+
+        /* Texto Circular Superior "LEGÍTIMO" para el Hero principal */
+        .hero-text-overlay {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+        }
+        .hero-text-overlay text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            fill: #b39158;
+            letter-spacing: 4px;
         }
 
         .header h1 { 
@@ -97,7 +116,7 @@
             text-align: center; 
         }
 
-        /* Contenedores laterales para logo-hero.png (La mascota del queso) */
+        /* Contenedores laterales para logo-hero.png (La mascota) */
         .side-logo-badge {
             position: relative;
             width: 95px;
@@ -113,7 +132,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            object-fit: contain; /* Mantiene la proporción de la mascota intacta */
+            object-fit: contain; 
         }
 
         .content-grid {
@@ -220,7 +239,9 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 280px; height: 280px; padding: 8px; }
+            .hero-banner-container { width: 300px; height: 300px; padding: 10px; }
+            .hero-text-overlay { width: 340px; height: 340px; top: -20px; left: -20px; }
+            .hero-text-overlay text { font-size: 15px; }
         }
     </style>
 </head>
@@ -229,9 +250,15 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor Redondo del Hero Principal (Ahora logo.png completo y sin cortes) -->
+            <!-- Contenedor Redondo del Hero Principal (Con borde dorado e imagen completa) -->
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
+                
+                <!-- Palabra LEGÍTIMO arriba y arqueada de manera limpia -->
+                <svg class="hero-text-overlay" viewBox="0 0 400 400">
+                    <path id="heroArcPath" d="M 40,200 A 160,160 0 0,1 360,200" fill="transparent" />
+                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">LEGÍTIMO</textPath></text>
+                </svg>
             </div>
 
             <header class="header">
