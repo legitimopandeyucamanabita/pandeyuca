@@ -52,17 +52,17 @@
             align-items: center;
         }
 
-        /* --- LOGO HERO: Redondo y Armonioso --- */
+        /* --- LOGO HERO: Más grande y con borde más fino --- */
         .hero-banner-container {
             position: relative;
             margin-bottom: 30px;
-            padding: 15px;
+            padding: 4px; /* Borde mucho más fino y elegante */
             background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
-            border-radius: 50%; /* Transforma el contenedor en un círculo perfecto */
+            border-radius: 50%; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: inline-block;
-            width: 320px;
-            height: 320px;
+            width: 360px; /* Tamaño aumentado para no perder la imagen */
+            height: 360px; /* Tamaño aumentado para no perder la imagen */
             overflow: hidden;
         }
         
@@ -70,8 +70,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%; /* Imagen redonda */
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; 
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         .header h1 { 
@@ -98,12 +98,12 @@
             text-align: center; 
         }
 
-        /* Contenedor lateral para logo.png (Mano izquierda y derecha) */
+        /* Contenedores laterales para logo.png */
         .side-logo-badge {
             position: relative;
             width: 90px;
             height: 90px;
-            background: transparent; /* Eliminado el fondo y borde amarillo */
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -117,21 +117,21 @@
             object-fit: cover;
         }
 
-        /* Texto Circular Superior "LEGITIMO" únicamente */
+        /* Texto Circular Superior "LEGÍTIMO" perfectamente arqueado arriba */
         .circular-text-overlay {
             position: absolute;
-            top: -12px;
-            left: -12px;
-            width: 114px;
-            height: 114px;
+            top: -15px;
+            left: -15px;
+            width: 120px;
+            height: 120px;
             pointer-events: none;
         }
         .circular-text-overlay text {
             font-family: 'Open Sans', sans-serif;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 14px;
             fill: #b39158;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         .content-grid {
@@ -238,6 +238,7 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
+            .hero-banner-container { width: 280px; height: 280px; }
         }
     </style>
 </head>
@@ -246,6 +247,7 @@
     <div class="menu-paper">
         <div class="branding-section">
             
+            <!-- Contenedor Redondo del Hero -->
             <div class="hero-banner-container">
                 <img src="logo-hero.png" alt="Mascota Pan de Yuca Hero" class="hero-image">
             </div>
@@ -255,22 +257,27 @@
                 <p>"Directamente del horno a tu paladar"</p>
             </header>
             
+            <!-- Estructura Combinada: Logo Izquierda - NUESTROS PRECIOS - Logo Derecha -->
             <div class="title-with-side-logos">
+                <!-- Mano Izquierda -->
                 <div class="side-logo-badge">
                     <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
-                    <svg class="circular-text-overlay" viewBox="0 0 114 114">
-                        <path id="leftCirclePath" d="M 57, 57 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="transparent" />
-                        <text><textPath href="#leftCirclePath" startOffset="50%" text-anchor="middle">LEGITIMO</textPath></text>
+                    <svg class="circular-text-overlay" viewBox="0 0 120 120">
+                        <!-- Trazado semicircular superior exacto para centrar el texto arriba -->
+                        <path id="leftCirclePath" d="M 12,60 A 48,48 0 0,1 108,60" fill="transparent" />
+                        <text><textPath href="#leftCirclePath" startOffset="50%" text-anchor="middle">LEGÍTIMO</textPath></text>
                     </svg>
                 </div>
 
                 <div class="section-title">Nuestros Precios</div>
 
+                <!-- Mano Derecha -->
                 <div class="side-logo-badge">
                     <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
-                    <svg class="circular-text-overlay" viewBox="0 0 114 114">
-                        <path id="rightCirclePath" d="M 57, 57 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="transparent" />
-                        <text><textPath href="#rightCirclePath" startOffset="50%" text-anchor="middle">LEGITIMO</textPath></text>
+                    <svg class="circular-text-overlay" viewBox="0 0 120 120">
+                        <!-- Trazado semicircular superior exacto para centrar el texto arriba -->
+                        <path id="rightCirclePath" d="M 12,60 A 48,48 0 0,1 108,60" fill="transparent" />
+                        <text><textPath href="#rightCirclePath" startOffset="50%" text-anchor="middle">LEGÍTIMO</textPath></text>
                     </svg>
                 </div>
             </div>
