@@ -44,14 +44,83 @@
             position: relative;
         }
 
-        .branding-section { text-align: center; margin-bottom: 50px; }
-        .main-logo {
-            width: 160px; height: 160px; background: white;
-            border-radius: 50%; border: 6px solid var(--brand-yellow);
-            padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: 0.5s; object-fit: cover;
+        /* --- SECCIÓN DE LOGOS COMBINADOS (ÚNICA MODIFICACIÓN DE DISEÑO) --- */
+        .branding-section { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            position: relative;
         }
-        .main-logo:hover { transform: scale(1.1) rotate(5deg); }
+        
+        .logo-container-composite {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Imagen Principal Grande (Mascota) */
+        .hero-main-logo {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+            transition: transform 0.5s ease;
+        }
+        .logo-container-composite:hover .hero-main-logo {
+            transform: scale(1.03);
+        }
+
+        /* Contenedor del Logo Secundario (Incrustado/Sello armonioso) */
+        .secondary-badge-wrapper {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 140px;
+            height: 140px;
+            background: white;
+            border-radius: 50%;
+            border: 5px solid var(--brand-yellow);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s;
+        }
+        .logo-container-composite:hover .secondary-badge-wrapper {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        /* Imagen del Logo Antiguo dentro de su círculo */
+        .main-logo-embedded {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Texto Circular "Legítimo" sobre el borde */
+        .circular-text-overlay {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 160px;
+            height: 160px;
+            pointer-events: none;
+            animation: rotateText 25s linear infinite;
+        }
+        .circular-text-overlay text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            fill: #b39158;
+            letter-spacing: 3px;
+        }
+        @keyframes rotateText {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* ----------------------------------------------------------------- */
 
         .header h1 { 
             font-family: var(--font-fancy); color: #b39158; 
@@ -163,6 +232,8 @@
         @media (max-width: 900px) {
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
+            .secondary-badge-wrapper { width: 110px; height: 110px; }
+            .circular-text-overlay { width: 130px; height: 130px; }
         }
     </style>
 </head>
@@ -170,7 +241,28 @@
 
     <div class="menu-paper">
         <div class="branding-section">
-            <img src="logo-hero.png" alt="Logo Hero de Mascota - Pan de Yuca Manabita" class="main-logo">
+            
+            <!-- CONTENEDOR COMPUESTO DE LOGOS -->
+            <div class="logo-container-composite">
+                <!-- Imagen Principal: Mascota Grande -->
+                <img src="logo-hero.png" alt="Mascota Pan de Yuca" class="hero-main-logo">
+                
+                <!-- Sello Secundario Redondo con logo.png -->
+                <div class="secondary-badge-wrapper">
+                    <img src="logo.png" alt="Logo Tradicional" class="main-logo-embedded">
+                    
+                    <!-- Texto Redondo Dinámico "LEGITIMO" -->
+                    <svg class="circular-text-overlay" viewBox="0 0 160 160">
+                        <path id="circlePath" d="M 80, 80 m -65, 0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0" fill="transparent" />
+                        <text>
+                            <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+                                • LEGITIMO • PAN DE YUCA
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+            </div>
+
             <header class="header">
                 <h1>Pan de Yuca Manabita</h1>
                 <p>"Directamente del horno a tu paladar"</p>
