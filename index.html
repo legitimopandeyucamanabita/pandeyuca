@@ -31,6 +31,7 @@
             padding: 20px;
             display: flex;
             justify-content: center;
+            position: relative; /* Necesario para el logo fijo */
         }
 
         .menu-paper {
@@ -44,89 +45,50 @@
             position: relative;
         }
 
-        /* --- SECCIÓN DE LOGOS COMBINADOS (ÚNICA MODIFICACIÓN DE DISEÑO) --- */
         .branding-section { 
             text-align: center; 
             margin-bottom: 50px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- CORRECCIÓN AZUL: Borde del Hero Cuadrado y Degradado Armonioso --- */
+        .hero-banner-container {
             position: relative;
+            margin-bottom: 30px;
+            padding: 15px;
+            /* Degradado dorado suave para el borde */
+            background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
+            border-radius: 20px; /* Esquinas redondeadas suaves */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: inline-block;
         }
         
-        .logo-container-composite {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        /* Imagen Principal Grande (Mascota) */
-        .hero-main-logo {
+        .hero-image {
             width: 100%;
-            max-width: 420px;
+            max-width: 500px; /* Tamaño controlado del héroe */
             height: auto;
             object-fit: cover;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
-            transition: transform 0.5s ease;
-        }
-        .logo-container-composite:hover .hero-main-logo {
-            transform: scale(1.03);
-        }
-
-        /* Contenedor del Logo Secundario (Incrustado/Sello armonioso) */
-        .secondary-badge-wrapper {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 140px;
-            height: 140px;
-            background: white;
-            border-radius: 50%;
-            border: 5px solid var(--brand-yellow);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.5s;
-        }
-        .logo-container-composite:hover .secondary-badge-wrapper {
-            transform: scale(1.1) rotate(-5deg);
+            border-radius: 15px; /* Que coincida con el contenedor interno */
+            
+            /* Efecto armonioso para suavizar el borde */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px); /* Desenfoque suave en los bordes */
+            -webkit-backdrop-filter: blur(5px);
         }
 
-        /* Imagen del Logo Antiguo dentro de su círculo */
-        .main-logo-embedded {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Texto Circular "Legítimo" sobre el borde */
-        .circular-text-overlay {
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 160px;
-            height: 160px;
-            pointer-events: none;
-            animation: rotateText 25s linear infinite;
-        }
-        .circular-text-overlay text {
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 800;
-            font-size: 14px;
-            fill: #b39158;
-            letter-spacing: 3px;
-        }
-        @keyframes rotateText {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        /* ----------------------------------------------------------------- */
+        /* Reemplazo del logo principal antiguo */
+        .main-logo { display: none; } /* Ocultamos el logo circular original */
 
         .header h1 { 
             font-family: var(--font-fancy); color: #b39158; 
             font-size: clamp(2.5rem, 6vw, 4rem); margin: 0; 
         }
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
+        
+        /* CORRECCIÓN ROJA: Se ha eliminado el texto "Pan de Yuca Manabita" que estaba aquí */
+
         .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
 
         .content-grid {
@@ -229,38 +191,83 @@
             border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; box-shadow: 0 0 100px rgba(0,0,0,0.6);
         }
 
+        /* --- CORRECCIÓN VERDE: Logo Antiguo Fijo en la Esquina Superior Derecha --- */
+        .corner-logo-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 140px;
+            height: 140px;
+            background: white;
+            border-radius: 50%;
+            border: 5px solid var(--brand-yellow);
+            padding: 5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000; /* Asegura que esté por encima de todo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s;
+        }
+        .corner-logo-badge:hover { transform: scale(1.1); }
+        
+        .main-logo-embedded {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Texto Circular LEGITIMO únicamente, concordando tipografía */
+        .circular-text-overlay {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 160px;
+            height: 160px;
+            pointer-events: none;
+        }
+        .circular-text-overlay text {
+            /* Uso de Open Sans con peso 800 para concordar con el logo interior */
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            fill: #b39158;
+            letter-spacing: 2px;
+        }
+
         @media (max-width: 900px) {
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
-            .secondary-badge-wrapper { width: 110px; height: 110px; }
-            .circular-text-overlay { width: 130px; height: 130px; }
+            .hero-image { max-width: 90%; }
+            .corner-logo-badge { width: 110px; height: 110px; top: 10px; right: 10px; }
+            .circular-text-overlay { width: 130px; height: 130px; top: -5px; left: -5px; }
+            .circular-text-overlay text { font-size: 12px; letter-spacing: 1px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Logo Antiguo Fijo en la Esquina (Corrección Verde) -->
+    <div class="corner-logo-badge">
+        <img src="logo.png" alt="Logo Tradicional" class="main-logo-embedded">
+        <!-- Texto Redondo Dinámico LEGITIMO únicamente -->
+        <svg class="circular-text-overlay" viewBox="0 0 160 160">
+            <path id="circlePath" d="M 80, 80 m -65, 0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0" fill="transparent" />
+            <text>
+                <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+                    • LEGITIMO • LEGITIMO • LEGITIMO • LEGITIMO •
+                </textPath>
+            </text>
+        </svg>
+    </div>
+
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- CONTENEDOR COMPUESTO DE LOGOS -->
-            <div class="logo-container-composite">
-                <!-- Imagen Principal: Mascota Grande -->
-                <img src="logo-hero.png" alt="Mascota Pan de Yuca" class="hero-main-logo">
-                
-                <!-- Sello Secundario Redondo con logo.png -->
-                <div class="secondary-badge-wrapper">
-                    <img src="logo.png" alt="Logo Tradicional" class="main-logo-embedded">
-                    
-                    <!-- Texto Redondo Dinámico "LEGITIMO" -->
-                    <svg class="circular-text-overlay" viewBox="0 0 160 160">
-                        <path id="circlePath" d="M 80, 80 m -65, 0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0" fill="transparent" />
-                        <text>
-                            <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                                • LEGITIMO • PAN DE YUCA
-                            </textPath>
-                        </text>
-                    </svg>
-                </div>
+            <!-- Contenedor Armonioso del Hero (Corrección Azul) -->
+            <div class="hero-banner-container">
+                <img src="logo-hero.png" alt="Mascota Pan de Yuca Hero" class="hero-image">
             </div>
 
             <header class="header">
