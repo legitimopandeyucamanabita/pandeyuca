@@ -52,28 +52,26 @@
             align-items: center;
         }
 
-        /* --- CORRECCIÓN AZUL: Contenedor del Hero Cuadrado y Armonioso --- */
+        /* --- LOGO HERO: Redondo y Armonioso --- */
         .hero-banner-container {
             position: relative;
             margin-bottom: 30px;
             padding: 15px;
-            background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%); /* Degradado suave */
-            border-radius: 20px;
+            background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
+            border-radius: 50%; /* Transforma el contenedor en un círculo perfecto */
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: inline-block;
+            width: 320px;
+            height: 320px;
+            overflow: hidden;
         }
         
         .hero-image {
             width: 100%;
-            max-width: 500px;
-            height: auto;
+            height: 100%;
             object-fit: cover;
-            border-radius: 15px;
-            
-            /* Suavizado para integración con el fondo */
+            border-radius: 50%; /* Imagen redonda */
             border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
 
         .header h1 { 
@@ -82,9 +80,59 @@
         }
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         
-        /* CORRECCIÓN ROJA: El bloque que repetía "Pan de Yuca Manabita" se ha eliminado de aquí */
+        /* --- SECCIÓN TITULO CON LOGOS ALINEADOS A LOS LADOS --- */
+        .title-with-side-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            width: 100%;
+        }
 
-        .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 30px 0; text-align: center; }
+        .section-title { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            color: #333; 
+            margin: 0; 
+            text-align: center; 
+        }
+
+        /* Contenedor lateral para logo.png (Mano izquierda y derecha) */
+        .side-logo-badge {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            background: transparent; /* Eliminado el fondo y borde amarillo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .side-logo-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Texto Circular Superior "LEGITIMO" únicamente */
+        .circular-text-overlay {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: 114px;
+            height: 114px;
+            pointer-events: none;
+        }
+        .circular-text-overlay text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            fill: #b39158;
+            letter-spacing: 3px;
+        }
 
         .content-grid {
             display: grid;
@@ -186,74 +234,14 @@
             border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; box-shadow: 0 0 100px rgba(0,0,0,0.6);
         }
 
-        /* --- CORRECCIÓN VERDE: Logo Antiguo Fijo en la Esquina Superior Derecha --- */
-        .corner-logo-badge {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 140px;
-            height: 140px;
-            background: white;
-            border-radius: 50%;
-            border: 5px solid var(--brand-yellow);
-            padding: 5px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 1000; /* Asegura que esté por encima del contenido */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.5s;
-        }
-        .corner-logo-badge:hover { transform: scale(1.1); }
-        
-        .main-logo-embedded {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Texto Circular "LEGÍTIMO" únicamente, concordando tipografía */
-        .circular-text-overlay {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 160px;
-            height: 160px;
-            pointer-events: none;
-        }
-        .circular-text-overlay text {
-            /* Uso de Open Sans con peso 800 para concordar con el logo interior */
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 800;
-            font-size: 16px;
-            fill: #b39158;
-            letter-spacing: 2px;
-        }
-
         @media (max-width: 900px) {
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
-            .hero-image { max-width: 90%; }
-            .corner-logo-badge { width: 110px; height: 110px; top: 10px; right: 10px; }
-            .circular-text-overlay { width: 130px; height: 130px; top: -5px; left: -5px; }
-            .circular-text-overlay text { font-size: 12px; letter-spacing: 1px; }
+            .title-with-side-logos { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="corner-logo-badge">
-        <img src="logo.png" alt="Logo Tradicional" class="main-logo-embedded">
-        <svg class="circular-text-overlay" viewBox="0 0 160 160">
-            <path id="circlePath" d="M 80, 80 m -65, 0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0" fill="transparent" />
-            <text>
-                <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                    • LEGÍTIMO • LEGÍTIMO • LEGÍTIMO • LEGÍTIMO •
-                </textPath>
-            </text>
-        </svg>
-    </div>
 
     <div class="menu-paper">
         <div class="branding-section">
@@ -266,7 +254,26 @@
                 <h1>Pan de Yuca Manabita</h1>
                 <p>"Directamente del horno a tu paladar"</p>
             </header>
-            <div class="section-title">Nuestros Precios</div>
+            
+            <div class="title-with-side-logos">
+                <div class="side-logo-badge">
+                    <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
+                    <svg class="circular-text-overlay" viewBox="0 0 114 114">
+                        <path id="leftCirclePath" d="M 57, 57 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="transparent" />
+                        <text><textPath href="#leftCirclePath" startOffset="50%" text-anchor="middle">LEGITIMO</textPath></text>
+                    </svg>
+                </div>
+
+                <div class="section-title">Nuestros Precios</div>
+
+                <div class="side-logo-badge">
+                    <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
+                    <svg class="circular-text-overlay" viewBox="0 0 114 114">
+                        <path id="rightCirclePath" d="M 57, 57 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="transparent" />
+                        <text><textPath href="#rightCirclePath" startOffset="50%" text-anchor="middle">LEGITIMO</textPath></text>
+                    </svg>
+                </div>
+            </div>
         </div>
 
         <div class="content-grid">
@@ -368,7 +375,6 @@
         const db = firebase.database();
         const rutaRef = db.ref('ubicacion_ruta');
 
-        // MAPA CON ROTACIÓN HABILITADA
         const map = L.map('mapa', { 
             zoomControl: false,
             rotate: true, 
@@ -390,7 +396,7 @@
         function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
         function abrirGmaps() { 
             const pos = marker.getLatLng();
-            window.open(`https://www.google.com/maps?q=${pos.lat},${pos.lng}`, '_blank'); 
+            window.open(`https://maps.google.com/?q=${pos.lat},${pos.lng}`, '_blank'); 
         }
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado al portapapeles."); }
         function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
@@ -406,7 +412,7 @@
                 if(map.getCenter().lat === 0) map.setView(pos, 18);
 
                 const rumbo = d.heading || 0;
-                map.setBearing(360 - rumbo); // El mapa gira hacia adelante
+                map.setBearing(360 - rumbo);
                 
                 if(d.estado === 'activo') {
                     marker.openPopup();
