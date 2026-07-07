@@ -53,13 +53,13 @@
             position: relative;
         }
 
-        /* --- LOGO HERO PRINCIPAL (Sin borde dorado, limpio) --- */
+        /* --- LOGO HERO (Sin borde exterior feo) --- */
         .hero-banner-container {
             position: relative;
-            margin-top: 45px; /* Más espacio arriba para que entre la palabra Legítimo ampliada */
+            margin-top: 40px;
             margin-bottom: 30px;
             padding: 10px; 
-            border-radius: 50%; 
+            background: transparent;
             display: inline-block;
             width: 360px; 
             height: 360px; 
@@ -72,19 +72,19 @@
             border-radius: 50%; 
         }
 
-        /* Texto Circular Superior "LEGÍTIMO" (Más grande, misma tipografía que abajo) */
+        /* Texto Circular Superior "LEGÍTIMO" - Tipografía idéntica a la de abajo y más grande */
         .hero-text-overlay {
             position: absolute;
-            top: -45px; /* Ajustado para el nuevo tamaño de letra */
+            top: -45px;
             left: -20px;
             width: 400px;
             height: 400px;
             pointer-events: none;
         }
         .hero-text-overlay text {
-            font-family: var(--font-fancy); /* Misma tipografía elegante de abajo */
-            font-size: 42px; /* Letra notablemente más grande */
-            fill: #b39158; /* Mismo color café/dorado de la marca */
+            font-family: var(--font-fancy);
+            font-size: 42px; /* Tamaño aumentado para que destaque */
+            fill: #b39158; /* Mismo color dorado/marrón */
         }
 
         .header h1 { 
@@ -116,15 +116,15 @@
             position: relative;
             width: 95px;
             height: 95px;
-            background: #fff; /* Fondo blanco sutil para resaltar la mascota */
+            border-radius: 50%;
+            border: 1.5px solid var(--price-gold); /* Borde redondo y fino */
+            box-shadow: 0 4px 10px rgba(181, 149, 91, 0.2);
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            border-radius: 50%;
-            border: 2px solid var(--price-gold); /* Borde dorado redondo y fino */
             padding: 5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         
         .side-logo-img {
@@ -238,9 +238,9 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 300px; height: 300px; padding: 10px; margin-top: 35px; }
+            .hero-banner-container { width: 300px; height: 300px; padding: 10px; margin-top: 30px; }
             .hero-text-overlay { width: 340px; height: 340px; top: -35px; left: -20px; }
-            .hero-text-overlay text { font-size: 34px; }
+            .hero-text-overlay text { font-size: 36px; }
         }
     </style>
 </head>
@@ -249,23 +249,22 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor del Hero Principal (Limpio y con "Legítimo" estilizado) -->
+            <!-- Contenedor del Hero Principal (Limpio, sin borde rígido) -->
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- Palabra LEGÍTIMO arriba (Grande y con fuente Dancing Script) -->
+                <!-- Palabra LEGÍTIMO arriba arqueada, elegante y grande -->
                 <svg class="hero-text-overlay" viewBox="0 0 400 400">
-                    <path id="heroArcPath" d="M 30,210 A 170,170 0 0,1 370,210" fill="transparent" />
+                    <path id="heroArcPath" d="M 40,220 A 160,160 0 0,1 360,220" fill="transparent" />
                     <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legitimo</textPath></text>
                 </svg>
             </div>
 
             <header class="header">
-                <h1>Pan de Yuca Manabita</h1>
-                <p>"Directamente del horno a tu paladar"</p>
+                <h1>"Directamente del horno a tu paladar"</h1>
             </header>
             
-            <!-- Sección: Mascota Izquierda (Con borde fino) - NUESTROS PRECIOS - Mascota Derecha (Con borde fino) -->
+            <!-- Estructura Combinada: Mascota Izquierda (con aro fino) - NUESTROS PRECIOS - Mascota Derecha (con aro fino) -->
             <div class="title-with-side-logos">
                 <!-- Mascota Izquierda -->
                 <div class="side-logo-badge">
