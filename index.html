@@ -52,26 +52,25 @@
             align-items: center;
         }
 
-        /* --- LOGO HERO: Más grande y con borde más fino --- */
+        /* --- LOGO HERO (logo.png ahora es el Principal) --- */
         .hero-banner-container {
             position: relative;
             margin-bottom: 30px;
-            padding: 4px; /* Borde mucho más fino y elegante */
+            padding: 12px; /* Espacio extra para que respiren las letras periféricas */
             background: linear-gradient(145deg, #e6d4a7 0%, #d4b47e 100%);
             border-radius: 50%; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: inline-block;
-            width: 360px; /* Tamaño aumentado para no perder la imagen */
-            height: 360px; /* Tamaño aumentado para no perder la imagen */
+            width: 360px; 
+            height: 360px; 
             overflow: hidden;
         }
         
         .hero-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* CAMBIO CLAVE: Evita que el círculo corte las letras en los bordes */
             border-radius: 50%; 
-            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         .header h1 { 
@@ -80,7 +79,7 @@
         }
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         
-        /* --- SECCIÓN TITULO CON LOGOS ALINEADOS A LOS LADOS --- */
+        /* --- SECCIÓN TITULO CON MASCOTAS ALINEADAS A LOS LADOS --- */
         .title-with-side-logos {
             display: flex;
             align-items: center;
@@ -98,11 +97,11 @@
             text-align: center; 
         }
 
-        /* Contenedores laterales para logo.png */
+        /* Contenedores laterales para logo-hero.png (La mascota del queso) */
         .side-logo-badge {
             position: relative;
-            width: 90px;
-            height: 90px;
+            width: 95px;
+            height: 95px;
             background: transparent;
             display: flex;
             align-items: center;
@@ -114,24 +113,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Texto Circular Superior "LEGÍTIMO" perfectamente arqueado arriba */
-        .circular-text-overlay {
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 120px;
-            height: 120px;
-            pointer-events: none;
-        }
-        .circular-text-overlay text {
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 800;
-            font-size: 14px;
-            fill: #b39158;
-            letter-spacing: 2px;
+            object-fit: contain; /* Mantiene la proporción de la mascota intacta */
         }
 
         .content-grid {
@@ -238,7 +220,7 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 280px; height: 280px; }
+            .hero-banner-container { width: 280px; height: 280px; padding: 8px; }
         }
     </style>
 </head>
@@ -247,9 +229,9 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor Redondo del Hero -->
+            <!-- Contenedor Redondo del Hero Principal (Ahora logo.png completo y sin cortes) -->
             <div class="hero-banner-container">
-                <img src="logo-hero.png" alt="Mascota Pan de Yuca Hero" class="hero-image">
+                <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
             </div>
 
             <header class="header">
@@ -257,28 +239,18 @@
                 <p>"Directamente del horno a tu paladar"</p>
             </header>
             
-            <!-- Estructura Combinada: Logo Izquierda - NUESTROS PRECIOS - Logo Derecha -->
+            <!-- Estructura Combinada: Mascota Izquierda - NUESTROS PRECIOS - Mascota Derecha -->
             <div class="title-with-side-logos">
-                <!-- Mano Izquierda -->
+                <!-- Mascota Izquierda -->
                 <div class="side-logo-badge">
-                    <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
-                    <svg class="circular-text-overlay" viewBox="0 0 120 120">
-                        <!-- Trazado semicircular superior exacto para centrar el texto arriba -->
-                        <path id="leftCirclePath" d="M 12,60 A 48,48 0 0,1 108,60" fill="transparent" />
-                        <text><textPath href="#leftCirclePath" startOffset="50%" text-anchor="middle">LEGÍTIMO</textPath></text>
-                    </svg>
+                    <img src="logo-hero.png" alt="Mascota Izquierda" class="side-logo-img">
                 </div>
 
                 <div class="section-title">Nuestros Precios</div>
 
-                <!-- Mano Derecha -->
+                <!-- Mascota Derecha -->
                 <div class="side-logo-badge">
-                    <img src="logo.png" alt="Logo Tradicional" class="side-logo-img">
-                    <svg class="circular-text-overlay" viewBox="0 0 120 120">
-                        <!-- Trazado semicircular superior exacto para centrar el texto arriba -->
-                        <path id="rightCirclePath" d="M 12,60 A 48,48 0 0,1 108,60" fill="transparent" />
-                        <text><textPath href="#rightCirclePath" startOffset="50%" text-anchor="middle">LEGÍTIMO</textPath></text>
-                    </svg>
+                    <img src="logo-hero.png" alt="Mascota Derecha" class="side-logo-img">
                 </div>
             </div>
         </div>
