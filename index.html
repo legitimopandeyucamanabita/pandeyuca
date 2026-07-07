@@ -6,6 +6,7 @@
     <title>Pan de Yuca Manabita | La Ruta del Sabor</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Raruto/leaflet-rotate@master/dist/leaflet-rotate.js"></script>
@@ -22,137 +23,334 @@
         }
 
         * { box-sizing: border-box; }
-        body { font-family: 'Open Sans', sans-serif; background: #d4d0c1; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .menu-paper { width: 100%; max-width: 1000px; background: var(--paper-bg) url('https://www.transparenttextures.com/patterns/aged-paper.png'); padding: 50px 30px; border-radius: 15px; box-shadow: 0 30px 80px rgba(0,0,0,0.3); border: 1px solid #c4c1af; position: relative; }
-        .branding-section { text-align: center; margin-bottom: 50px; display: flex; flex-direction: column; align-items: center; position: relative; }
 
-        /* LOGO Y TEXTO CURVO CORREGIDO */
-        .hero-banner-container { position: relative; margin-top: 80px; margin-bottom: 30px; display: inline-block; width: 250px; height: 250px; }
-        .hero-image { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; border: 1.5px solid var(--price-gold); box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15); }
-        .hero-text-overlay { position: absolute; top: -65px; left: 0; width: 250px; height: 250px; pointer-events: none; overflow: visible; }
-        .hero-text-overlay text { font-family: var(--font-fancy); font-weight: 900; font-size: 55px; fill: #b39158; letter-spacing: 4px; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #d4d0c1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-        .header h1 { font-family: var(--font-fancy); color: #b39158; font-size: 4rem; margin: 0; }
-        .title-with-side-logos { display: flex; align-items: center; justify-content: center; gap: 30px; margin: 30px 0; }
-        .section-title { font-size: 2.5rem; font-weight: 800; color: #333; }
-        .side-logo-badge { width: 95px; height: 95px; border-radius: 50%; border: 1.5px solid var(--price-gold); background: #fff; display: flex; align-items: center; justify-content: center; padding: 5px; }
+        .menu-paper {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--paper-bg) url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            padding: 50px 30px;
+            border-radius: 15px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            border: 1px solid #c4c1af;
+            position: relative;
+        }
+
+        .branding-section { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-banner-container {
+            position: relative;
+            margin-top: 65px; 
+            margin-bottom: 30px;
+            display: inline-block;
+            width: 250px;  
+            height: 250px; 
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            border-radius: 50%; 
+            border: 1.5px solid var(--price-gold);
+            box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15);
+        }
+
+        /* CORRECCIÓN: Ajuste de arco perfecto y centrado */
+        .hero-text-overlay {
+            position: absolute;
+            top: -35px; 
+            left: 0;
+            width: 250px;
+            height: 250px;
+            pointer-events: none;
+            overflow: visible;
+        }
+        .hero-text-overlay text {
+            font-family: var(--font-fancy);
+            font-weight: 900; 
+            font-size: 42px; 
+            fill: #b39158; 
+            letter-spacing: 2px;
+        }
+
+        .header h1 { 
+            font-family: var(--font-fancy); 
+            color: #b39158; 
+            font-size: clamp(2.5rem, 6vw, 4rem); 
+            margin: 0; 
+        }
+        
+        .title-with-side-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .section-title { font-size: 2.5rem; font-weight: 800; color: #333; margin: 0; }
+
+        .side-logo-badge {
+            width: 95px; height: 95px; border-radius: 50%;
+            border: 1.5px solid var(--price-gold); 
+            box-shadow: 0 4px 10px rgba(181, 149, 91, 0.2);
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; padding: 5px;
+        }
+        
         .side-logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; }
 
-        .content-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 20px; align-items: center; }
-        .product-card { text-align: center; padding: 20px; transition: 0.4s; border-radius: 20px; }
-        .product-card:hover { transform: translateY(-12px); background: rgba(255,255,255,0.5); }
-        .framed-img { width: 100%; max-width: 170px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); }
-        .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
-        .price-tag { background: var(--price-gold); color: white; width: 85px; height: 85px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; margin: 15px auto; font-weight: 800; }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .product-card {
+            text-align: center;
+            padding: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.5); }
         
-        .promo-box { background: white; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 2px solid #eee; text-align: center; }
+        .framed-img {
+            width: 100%;
+            max-width: 170px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            border: var(--gold-frame);
+            box-shadow: var(--gold-shadow);
+        }
+
+        .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
+        .prod-info span { font-size: 1rem; color: #777; font-weight: 700; }
+
+        .price-tag {
+            background: var(--price-gold);
+            color: white; width: 85px; height: 85px; border-radius: 50%;
+            display: flex; flex-direction: column; justify-content: center;
+            margin: 15px auto; font-weight: 800; border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 5px 15px rgba(181, 149, 91, 0.4);
+        }
+        .price-tag big { font-size: 1.5rem; }
+        .price-tag small { font-size: 0.6rem; letter-spacing: 1px; }
+
+        .promo-box {
+            background: white; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 2px solid #eee; overflow: hidden;
+            text-align: center; transition: 0.4s;
+        }
         .promo-header { background: var(--gold-gradient); color: white; padding: 20px; }
+        .promo-header h4 { margin: 0; font-size: 1.1rem; letter-spacing: 2px; font-weight: 800; }
+        .promo-header h2 { font-family: var(--font-fancy); font-size: 3.2rem; margin: 5px 0; }
+        
         .promo-content { padding: 30px 20px; }
-        .gift-item img { width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); }
+        .gift-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        
+        .gift-item img {
+            width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); object-fit: cover;
+        }
+        .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
 
         .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
-        #map-container { width: 100%; height: 450px; margin: 30px 0; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        #map-container { 
+            width: 100%; 
+            height: 450px; 
+            margin: 30px 0; 
+            border-radius: 20px; 
+            border: 6px solid white; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            position: relative;
+        }
+
+        #mapa { width: 100%; height: 100%; }
+        
+        .truck-emoji { font-size: 45px; display: inline-block; }
+
         .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 12px 25px; background: white; border-radius: 50px; font-weight: 800; border: 1px solid #eee; }
         .dot { width: 14px; height: 14px; border-radius: 50%; background: #EF4444; }
+
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
-        .btn { padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .btn-wa { background: #2563eb; color: white; }
+        .btn { padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.95rem; }
+        .btn-wa { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
+        .btn-gold { background: var(--price-gold); color: white; }
         .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
-        
-        #adminPanel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 25px; z-index: 10000; border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; }
-        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+
+        #adminPanel {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; border-radius: 25px; z-index: 10000;
+            border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; box-shadow: 0 0 100px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .promo-box { order: -1; margin-bottom: 30px; }
+            .title-with-side-logos { flex-direction: column; gap: 15px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="menu-paper">
         <div class="branding-section">
+            
             <div class="hero-banner-container">
-                <img src="logo.png" alt="Logo Pan de Yuca" class="hero-image">
-                <!-- ARCO CORREGIDO: Radio 105 para pegarse al borde -->
-                <svg class="hero-text-overlay" viewBox="0 0 250 250">
+                <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
+                
+                <!-- SVG CORREGIDO -->
+                <svg class="hero-text-overlay" viewBox="0 0 250 250" preserveAspectRatio="xMidYMid meet">
                     <path id="heroArcPath" d="M 20,125 A 105,105 0 0,1 230,125" fill="transparent" />
-                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
+                    <text>
+                        <textPath href="#heroArcPath" startOffset="50%" text-anchor="middle" dominant-baseline="middle">
+                            Legítimo
+                        </textPath>
+                    </text>
                 </svg>
             </div>
 
-            <header class="header"><h1>"Del horno a tu paladar"</h1></header>
+            <header class="header">
+                <h1>"Del horno a tu paladar"</h1>
+            </header>
             
             <div class="title-with-side-logos">
-                <div class="side-logo-badge"><img src="logo-hero.png" class="side-logo-img"></div>
+                <div class="side-logo-badge">
+                    <img src="logo-hero.png" alt="Mascota Izquierda" class="side-logo-img">
+                </div>
                 <div class="section-title">Nuestros Precios</div>
-                <div class="side-logo-badge"><img src="logo-hero.png" class="side-logo-img"></div>
+                <div class="side-logo-badge">
+                    <img src="logo-hero.png" alt="Mascota Derecha" class="side-logo-img">
+                </div>
             </div>
         </div>
 
         <div class="content-grid">
             <div class="column">
                 <div class="product-card">
-                    <img src="funda.jpeg" class="framed-img">
-                    <div class="prod-info"><b>Funda de Pan</b></div>
-                    <div class="price-tag">$1.00</div>
+                    <img src="funda.jpeg" alt="Funda de Pan" class="framed-img">
+                    <div class="prod-info"><b>Funda de Pan</b><span>(4 unidades)</span></div>
+                    <div class="price-tag"><big>$1.00</big><small>USD</small></div>
                 </div>
                 <div class="product-card">
-                    <img src="combo1.jpeg" class="framed-img">
-                    <div class="prod-info"><b>Combo 1</b></div>
-                    <div class="price-tag">$1.50</div>
+                    <img src="combo1.jpeg" alt="Combo 1" class="framed-img">
+                    <div class="prod-info"><b>🔥 Combo 1</b><span>(4 Panes + Yogurt)</span></div>
+                    <div class="price-tag"><big>$1.50</big><small>USD</small></div>
                 </div>
             </div>
 
             <div class="promo-box">
-                <div class="promo-header"><h4>PROMO ESPECIAL</h4><h2>¡Llévate!</h2></div>
-                <div class="promo-content">
-                    <div class="gift-item"><img src="regalo-yogurt.jpeg"><p>2 VASOS YOGURT</p></div>
+                <div class="promo-header">
+                    <h4>🎁 PROMO ESPECIAL POR LA COMPRA DE 5 FUNDAS</h4>
+                    <h2>¡Llévate!</h2>
                 </div>
-                <div onclick="document.getElementById('adminPanel').style.display='block'" style="height:30px; cursor:pointer;"></div>
+                <div class="promo-content">
+                    <div class="gift-container">
+                        <div class="gift-item">
+                            <img src="regalo-yogurt.jpeg" alt="2 Vasos Yogurt">
+                            <p>2 VASOS DE<br>YOGURT</p>
+                        </div>
+                        <div style="font-weight: 900; color: var(--price-gold); font-size: 1.8rem; margin: 10px 0;">ó</div>
+                        <div class="gift-item">
+                            <img src="regalo-funda.jpeg" alt="Funda Pan Extra">
+                            <p>1 FUNDA DE<br>PAN ADICIONAL</p>
+                        </div>
+                    </div>
+                    <div style="font-family: var(--font-fancy); font-size: 2.5rem; margin-top: 15px; color:#333">¡Gratis! 😍</div>
+                </div>
+                <div onclick="abrirAdmin()" style="height:30px; cursor:pointer;"></div>
             </div>
 
             <div class="column">
                 <div class="product-card">
-                    <img src="yogurt.jpeg" class="framed-img">
-                    <div class="prod-info"><b>Yogurt</b></div>
-                    <div class="price-tag">$0.75</div>
+                    <img src="yogurt.jpeg" alt="Yogurt Artesanal" class="framed-img">
+                    <div class="prod-info"><b>Yogurt Artesanal</b><span>Vaso</span></div>
+                    <div class="price-tag"><big>$0.75</big><small>USD</small></div>
                 </div>
                 <div class="product-card">
-                    <img src="combo2.jpeg" class="framed-img">
-                    <div class="prod-info"><b>Combo 2</b></div>
-                    <div class="price-tag">$2.00</div>
+                    <img src="combo2.jpeg" alt="Combo 2" class="framed-img">
+                    <div class="prod-info"><b>🔥 Combo 2</b><span>(6 Panes + Yogurt)</span></div>
+                    <div class="price-tag"><big>$2.00</big><small>USD</small></div>
                 </div>
             </div>
         </div>
 
         <div class="gps-section">
-            <div class="status-pill"><div id="dot" class="dot"></div><span id="estadoTxt">Cargando...</span></div>
-            <div id="map-container"><div id="mapa" style="width:100%; height:100%;"></div></div>
+            <div class="status-pill">
+                <div id="dot" class="dot"></div>
+                <span id="estadoTxt">Cargando estado...</span>
+            </div>
+            <div style="margin-top: 25px; margin-bottom: 15px;">
+                <h2 style="font-family: var(--font-fancy); font-size: 3.5rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1;">La Ruta del Sabor</h2>
+            </div>
+            <div id="map-container">
+                <div id="mapa"></div>
+            </div>
             <div class="btn-group">
                 <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ Ordenar WhatsApp</a>
-                <button class="btn btn-outline" onclick="window.location.reload()">🔄</button>
+                <button class="btn btn-gold" onclick="centrarMapa()">🎯 Centrar Mapa</button>
+                <button class="btn btn-outline" onclick="abrirGmaps()">🧭 Google Maps</button>
             </div>
         </div>
-    </div>
-
-    <!-- Panel Admin -->
-    <div id="adminPanel">
-        <h2>Control de Ruta</h2>
-        <button class="btn btn-wa" style="width:100%;" onclick="iniciarRuta()">Iniciar</button>
-        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script>
-        const map = L.map('mapa').setView([0, 0], 18);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        let marker = L.marker([0, 0]).addTo(map);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
+            authDomain: "pan-de-yuca.firebaseapp.com",
+            databaseURL: "https://pan-de-yuca-default-rtdb.firebaseio.com",
+            projectId: "pan-de-yuca",
+            storageBucket: "pan-de-yuca.firebasestorage.app",
+            messagingSenderId: "146026389755",
+            appId: "1:146026389755:web:5148691db252f56215d05e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const rutaRef = db.ref('ubicacion_ruta');
 
-        // Lógica de Firebase (simplificada)
-        const rutaRef = firebase.database().ref('ubicacion_ruta');
+        const map = L.map('mapa', { zoomControl: false, rotate: true, touchRotate: true }).setView([0, 0], 18);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        const truckIcon = L.divIcon({ className: 'none', html: '<div id="camion" class="truck-emoji">🚚</div>', iconSize: [50, 50], iconAnchor: [25, 25] });
+        let marker = L.marker([0, 0], { icon: truckIcon }).addTo(map);
+
+        function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
+        function abrirGmaps() { const pos = marker.getLatLng(); window.open(`https://maps.google.com/?q=${pos.lat},${pos.lng}`, '_blank'); }
+
         rutaRef.on('value', snap => {
             const d = snap.val();
-            if(d && d.lat) {
+            if(d && d.lat){
                 marker.setLatLng([d.lat, d.lon]);
+                if(map.getCenter().lat === 0) map.setView([d.lat, d.lon], 18);
+                map.setBearing(360 - (d.heading || 0));
+                document.getElementById('estadoTxt').innerText = d.estado === 'activo' ? "RUTA ACTIVA" : "RUTA CERRADA";
                 document.getElementById('dot').style.background = d.estado === 'activo' ? "#22C55E" : "#EF4444";
-                document.getElementById('estadoTxt').innerText = d.estado === 'activo' ? "Ruta Activa" : "Ruta Cerrada";
             }
         });
     </script>
