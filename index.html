@@ -53,42 +53,43 @@
             position: relative;
         }
 
-        /* --- LOGO HERO (Reducido un 30% y con borde dorado delgado) --- */
+        /* --- CORRECCIÓN EN LOGO.PNG (Contenedor superior principal) --- */
         .hero-banner-container {
             position: relative;
-            margin-top: 60px; /* Espacio superior calibrado para que encaje el texto grande */
+            margin-top: 50px; 
             margin-bottom: 30px;
-            padding: 6px; 
             background: transparent;
             display: inline-block;
-            width: 250px;  /* Reducción exacta del 30% (Antes 360px) */
-            height: 250px; /* Reducción exacta del 30% (Antes 360px) */
-            border: 1.5px solid var(--price-gold); /* Borde elegantemente delgado */
-            border-radius: 50%;
+            width: 250px;  
+            height: 250px; 
         }
         
+        /* Borde aplicado directo a logo.png para eliminar el efecto de doble línea */
         .hero-image {
             width: 100%;
             height: 100%;
             object-fit: contain; 
             border-radius: 50%; 
+            border: 1.5px solid var(--price-gold);
+            box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15);
         }
 
-        /* Texto Circular Superior "LEGÍTIMO" - Centrado y expandido a 1/3 de la circunferencia */
+        /* Texto Circular Superior "LEGÍTIMO" sobre logo.png - Ajustado a 1/3 exacto y en negrilla */
         .hero-text-overlay {
             position: absolute;
-            top: -65px; /* Ajuste milimétrico sobre el nuevo borde */
-            left: -25px;
-            width: 300px;
-            height: 300px;
+            top: -45px; 
+            left: 0;
+            width: 250px;
+            height: 250px;
             pointer-events: none;
             overflow: visible;
         }
         .hero-text-overlay text {
             font-family: var(--font-fancy);
-            font-weight: 900;
-            font-size: 44px; /* Más grande para imponer presencia visual proporcional */
+            font-weight: 900; /* Robusta y gruesa */
+            font-size: 42px; 
             fill: #b39158; 
+            letter-spacing: 1px;
         }
 
         .header h1 { 
@@ -97,7 +98,7 @@
         }
         .header p { font-size: 1.2rem; color: #666; font-weight: 600; margin: 5px 0; }
         
-        /* --- SECCIÓN TITULO CON MASCOTAS ALINEADAS A LOS LADOS --- */
+        /* --- SECCIÓN TITULO CON LOGO-HERO.PNG (Mascotas sin modificaciones de texto) --- */
         .title-with-side-logos {
             display: flex;
             align-items: center;
@@ -115,7 +116,6 @@
             text-align: center; 
         }
 
-        /* Contenedores laterales para logo-hero.png con BORDE DORADO REDONDO Y FINO */
         .side-logo-badge {
             position: relative;
             width: 95px;
@@ -242,9 +242,9 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 200px; height: 200px; padding: 5px; margin-top: 50px; }
-            .hero-text-overlay { width: 250px; height: 250px; top: -55px; left: -25px; }
-            .hero-text-overlay text { font-size: 36px; }
+            .hero-banner-container { width: 200px; height: 200px; margin-top: 40px; }
+            .hero-text-overlay { width: 200px; height: 200px; top: -38px; left: 0; }
+            .hero-text-overlay text { font-size: 34px; }
         }
     </style>
 </head>
@@ -253,14 +253,14 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor del Hero Principal (Reducido 30% + Borde Delgado) -->
+            <!-- Contenedor del Hero Principal utilizando logo.png con las correcciones aplicadas -->
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- Palabra Legítimo con tilde, centrada y abarcando 1/3 de la circunferencia -->
-                <svg class="hero-text-overlay" viewBox="0 0 300 300">
-                    <path id="heroArcPath" d="M 30,165 A 120,120 0 0,1 270,165" fill="transparent" />
-                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
+                <!-- Palabra Legítimo: arco cerrado a 1/3 de circunferencia, centrada y en negrita gruesa -->
+                <svg class="hero-text-overlay" viewBox="0 0 250 250">
+                    <path id="heroArcPath" d="M 45,110 A 80,80 0 0,1 205,110" fill="transparent" />
+                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle" style="font-weight: 800;">Legítimo</textPath></text>
                 </svg>
             </div>
 
@@ -268,16 +268,14 @@
                 <h1>"Del horno a tu paladar"</h1>
             </header>
             
-            <!-- Estructura Combinada: Mascota Izquierda (con aro fino) - NUESTROS PRECIOS - Mascota Derecha (con aro fino) -->
+            <!-- Bloque de precios usando las imágenes laterales logo-hero.png sin texto arqueado -->
             <div class="title-with-side-logos">
-                <!-- Mascota Izquierda -->
                 <div class="side-logo-badge">
                     <img src="logo-hero.png" alt="Mascota Izquierda" class="side-logo-img">
                 </div>
 
                 <div class="section-title">Nuestros Precios</div>
 
-                <!-- Mascota Derecha -->
                 <div class="side-logo-badge">
                     <img src="logo-hero.png" alt="Mascota Derecha" class="side-logo-img">
                 </div>
