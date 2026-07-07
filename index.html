@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pan de Yuca Manabita | La Ruta del Sabor</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -53,16 +53,18 @@
             position: relative;
         }
 
-        /* --- LOGO HERO (Sin borde exterior feo) --- */
+        /* --- LOGO HERO (Reducido un 30% y con borde dorado delgado) --- */
         .hero-banner-container {
             position: relative;
-            margin-top: 40px;
+            margin-top: 60px; /* Espacio superior calibrado para que encaje el texto grande */
             margin-bottom: 30px;
-            padding: 10px; 
+            padding: 6px; 
             background: transparent;
             display: inline-block;
-            width: 360px; 
-            height: 360px; 
+            width: 250px;  /* Reducción exacta del 30% (Antes 360px) */
+            height: 250px; /* Reducción exacta del 30% (Antes 360px) */
+            border: 1.5px solid var(--price-gold); /* Borde elegantemente delgado */
+            border-radius: 50%;
         }
         
         .hero-image {
@@ -72,19 +74,21 @@
             border-radius: 50%; 
         }
 
-        /* Texto Circular Superior "LEGÍTIMO" - Tipografía idéntica a la de abajo y más grande */
+        /* Texto Circular Superior "LEGÍTIMO" - Centrado y expandido a 1/3 de la circunferencia */
         .hero-text-overlay {
             position: absolute;
-            top: -45px;
-            left: -20px;
-            width: 400px;
-            height: 400px;
+            top: -65px; /* Ajuste milimétrico sobre el nuevo borde */
+            left: -25px;
+            width: 300px;
+            height: 300px;
             pointer-events: none;
+            overflow: visible;
         }
         .hero-text-overlay text {
             font-family: var(--font-fancy);
-            font-size: 42px; /* Tamaño aumentado para que destaque */
-            fill: #b39158; /* Mismo color dorado/marrón */
+            font-weight: 900;
+            font-size: 44px; /* Más grande para imponer presencia visual proporcional */
+            fill: #b39158; 
         }
 
         .header h1 { 
@@ -117,7 +121,7 @@
             width: 95px;
             height: 95px;
             border-radius: 50%;
-            border: 1.5px solid var(--price-gold); /* Borde redondo y fino */
+            border: 1.5px solid var(--price-gold); 
             box-shadow: 0 4px 10px rgba(181, 149, 91, 0.2);
             background: #fff;
             display: flex;
@@ -238,8 +242,8 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 300px; height: 300px; padding: 10px; margin-top: 30px; }
-            .hero-text-overlay { width: 340px; height: 340px; top: -35px; left: -20px; }
+            .hero-banner-container { width: 200px; height: 200px; padding: 5px; margin-top: 50px; }
+            .hero-text-overlay { width: 250px; height: 250px; top: -55px; left: -25px; }
             .hero-text-overlay text { font-size: 36px; }
         }
     </style>
@@ -249,19 +253,19 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor del Hero Principal (Limpio, sin borde rígido) -->
+            <!-- Contenedor del Hero Principal (Reducido 30% + Borde Delgado) -->
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- Palabra LEGÍTIMO arriba arqueada, elegante y grande -->
-                <svg class="hero-text-overlay" viewBox="0 0 400 400">
-                    <path id="heroArcPath" d="M 40,220 A 160,160 0 0,1 360,220" fill="transparent" />
-                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legitimo</textPath></text>
+                <!-- Palabra Legítimo con tilde, centrada y abarcando 1/3 de la circunferencia -->
+                <svg class="hero-text-overlay" viewBox="0 0 300 300">
+                    <path id="heroArcPath" d="M 30,165 A 120,120 0 0,1 270,165" fill="transparent" />
+                    <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
                 </svg>
             </div>
 
             <header class="header">
-                <h1>"Directamente del horno a tu paladar"</h1>
+                <h1>"Del horno a tu paladar"</h1>
             </header>
             
             <!-- Estructura Combinada: Mascota Izquierda (con aro fino) - NUESTROS PRECIOS - Mascota Derecha (con aro fino) -->
