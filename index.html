@@ -56,7 +56,7 @@
         /* --- LOGO PRINCIPAL (logo.png) --- */
         .hero-banner-container {
             position: relative;
-            margin-top: 80px; 
+            margin-top: 60px; 
             margin-bottom: 30px;
             display: inline-block;
             width: 250px;  
@@ -72,10 +72,10 @@
             box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15);
         }
 
-        /* Texto "LEGÍTIMO": Arco suavizado a 100 para corregir el efecto montaña y simular la circunferencia perfecta */
+        /* Texto "LEGÍTIMO": Expandido armónicamente ocupando media circunferencia superior */
         .hero-text-overlay {
             position: absolute;
-            top: -70px; 
+            top: -55px; 
             left: 0;
             width: 250px;
             height: 250px;
@@ -87,7 +87,7 @@
             font-weight: 900; 
             font-size: 64px; 
             fill: #b39158; 
-            letter-spacing: 0.5px;
+            letter-spacing: 2px;
         }
 
         .header h1 { 
@@ -241,8 +241,8 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 200px; height: 200px; margin-top: 60px; }
-            .hero-text-overlay { width: 200px; height: 200px; top: -55px; left: 0; }
+            .hero-banner-container { width: 200px; height: 200px; margin-top: 40px; }
+            .hero-text-overlay { width: 200px; height: 200px; top: -42px; left: 0; }
             .hero-text-overlay text { font-size: 52px; }
         }
     </style>
@@ -252,13 +252,11 @@
     <div class="menu-paper">
         <div class="branding-section">
             
-            <!-- Contenedor del Logo Principal -->
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- Palabra Legítimo: El trazo usa un radio idéntico al círculo (A 100,100) para curvarse armónicamente sin deformarse en el centro -->
                 <svg class="hero-text-overlay" viewBox="0 0 250 250">
-                    <path id="heroArcPath" d="M 33,105 A 100,100 0 0,1 217,105" fill="transparent" />
+                    <path id="heroArcPath" d="M 25,125 A 100,100 0 0,1 225,125" fill="transparent" />
                     <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
                 </svg>
             </div>
@@ -267,7 +265,6 @@
                 <h1>"Del horno a tu paladar"</h1>
             </header>
             
-            <!-- Bloque de precios con mascotas alineadas -->
             <div class="title-with-side-logos">
                 <div class="side-logo-badge">
                     <img src="logo-hero.png" alt="Mascota Izquierda" class="side-logo-img">
@@ -281,7 +278,6 @@
             </div>
         </div>
 
-        <!-- Grid de Productos -->
         <div class="content-grid">
             <div class="column">
                 <div class="product-card">
@@ -296,7 +292,6 @@
                 </div>
             </div>
 
-            <!-- Caja de Promoción Central -->
             <div class="promo-box">
                 <div class="promo-header">
                     <h4>🎁 PROMO ESPECIAL POR LA COMPRA DE 5 FUNDAS</h4>
@@ -334,7 +329,6 @@
             </div>
         </div>
 
-        <!-- Sección de Mapa / GPS -->
         <div class="gps-section">
             <div class="status-pill">
                 <div id="dot" class="dot"></div>
@@ -360,7 +354,6 @@
         </div>
     </div>
 
-    <!-- Panel de Administración Oculto -->
     <div id="adminPanel">
         <h2 style="font-family: var(--font-fancy); font-size: 2.2rem; color: var(--price-gold); margin-bottom: 20px;">Control de Ruta</h2>
         <button class="btn btn-wa" style="width:100%; margin-bottom:10px; background:#22c55e" onclick="iniciarRuta()">▶️ INICIAR RUTA (GPS)</button>
@@ -368,7 +361,6 @@
         <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
     </div>
 
-    <!-- Integración Base de Datos Firebase y Mapa Lógica -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script>
@@ -427,7 +419,7 @@
                 if(d.estado === 'activo') {
                     marker.openPopup();
                     dot.style.background = "#22C55E";
-                    txt.innerText = "¡YA ESTAMOS HORNEANDO NO TE QUEDES SIN DISFRUTAR!";
+                    txt.innerText = "RUTA ACTIVA";
                 } else {
                     dot.style.background = "#EF4444";
                     txt.innerText = "RUTA CERRADA";
