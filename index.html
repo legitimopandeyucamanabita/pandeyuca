@@ -1,274 +1,706 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- 39. SEO y Accesibilidad Estructurada -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pan de Yuca Manabita Premium - Del horno a tu paladar. Sigue nuestra Ruta del Sabor en tiempo real.">
+    <meta name="theme-color" content="#b39158">
     <title>Pan de Yuca Manabita | La Ruta del Sabor</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- 40. Optimización de Carga de Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Librerías de Mapas -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Raruto/leaflet-rotate@master/dist/leaflet-rotate.js"></script>
 
     <style>
+        /* 34. SISTEMA COMPLETO DE VARIABLES CSS */
         :root {
-            --gold-gradient: linear-gradient(135deg, #c0a16c 0%, #b39158 100%);
-            --price-gold: #b5955b;
-            --brand-yellow: #f2b705; 
+            --gold-light: #f3e7c4;
+            --gold-primary: #b39158;
+            --gold-dark: #8c6d39;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #b39158 50%, #8a6d29 100%);
+            --text-dark: #2c2519;
+            --text-light: #6e6557;
+            --paper-clean: #fdfbf7;
+            
+            /* Efectos Modernos */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(212, 175, 55, 0.25);
+            --premium-shadow: 0 20px 40px rgba(44, 37, 25, 0.08);
+            --gold-glow: 0 0 25px rgba(179, 145, 88, 0.45);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             --font-fancy: 'Dancing Script', cursive;
-            --paper-bg: #fdfbf2;
-            --gold-frame: 5px solid var(--price-gold);
-            --gold-shadow: 0 10px 20px rgba(181, 149, 91, 0.3);
         }
 
-        * { box-sizing: border-box; }
+        /* 37. RENDIMIENTO Y LIMPIEZA DE ESTILOS GLOBALES */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
 
         body {
             font-family: 'Open Sans', sans-serif;
-            background: #d4d0c1;
-            margin: 0;
-            padding: 20px;
+            color: var(--text-dark);
+            /* 1. Fondo Renovado Con Textura Fina, Viñeta y Gradiente Cálido */
+            background: radial-gradient(circle, rgba(253,251,247,0.4) 0%, rgba(212,204,188,0.7) 100%), 
+                        url('https://www.transparenttextures.com/patterns/cream-paper.png'), #e4dfd3;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
+        /* Contenedor Principal (Efecto Pergamino Premium) */
         .menu-paper {
             width: 100%;
-            max-width: 1000px;
-            background: var(--paper-bg) url('https://www.transparenttextures.com/patterns/aged-paper.png');
-            padding: 50px 30px;
-            border-radius: 15px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
-            border: 1px solid #c4c1af;
+            max-width: 1050px;
+            background: var(--paper-clean);
+            padding: 60px 45px;
+            border-radius: 24px;
+            box-shadow: 0 40px 90px rgba(44, 37, 25, 0.18), inset 0 0 60px rgba(179, 145, 88, 0.05);
+            border: 1px solid rgba(179, 145, 88, 0.2);
             position: relative;
         }
 
+        /* 35. COMENTARIOS: SECCIÓN HERO */
         .branding-section { 
             text-align: center; 
-            margin-bottom: 50px; 
+            margin-bottom: 60px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
         }
 
-        /* --- LOGO PRINCIPAL (logo.png) --- */
+        /* 2. Hero Rediseñado Flotante */
         .hero-banner-container {
             position: relative;
-            margin-top: 100px; /* Incrementado el margen superior para que las letras grandes no toquen el borde superior */
-            margin-bottom: 30px;
+            margin-top: 40px;
+            margin-bottom: 40px;
             display: inline-block;
-            width: 250px;  
-            height: 250px; 
+            width: 240px;  
+            height: 240px; 
+            animation: floatAnimation 5s ease-in-out infinite;
         }
         
+        /* Iluminación, Anillo Brillante y Glow Detrás del Logo */
+        .hero-banner-container::before {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(243,231,196,0.6) 0%, transparent 70%);
+            box-shadow: var(--gold-glow);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .hero-image {
             width: 100%;
             height: 100%;
             object-fit: contain; 
             border-radius: 50%; 
-            border: 1.5px solid var(--price-gold);
-            box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15);
+            border: 2px solid var(--gold-primary);
+            box-shadow: var(--premium-shadow);
+            position: relative;
+            z-index: 2;
+            background: white;
         }
 
-        /* --- CORRECCIÓN: "LEGÍTIMO" UN 25% MÁS GRANDE AÚN --- */
+        /* 3. SVG Legítimo Grabado en Oro */
         .hero-text-overlay {
             position: absolute;
-            top: -42px; /* Ajustado para contener la gran altura de la tipografía robusta */
-            left: -25px;
+            top: -45px;
+            left: -30px;
             width: 300px;  
             height: 300px;
             pointer-events: none;
             overflow: visible;
+            z-index: 3;
+            filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
         }
         .hero-text-overlay text {
             font-family: var(--font-fancy);
             font-weight: 900; 
-            font-size: 72px; /* ¡Aumentado otro 25%! Impacto visual imponente de 9 a 3 */
-            fill: #b39158; 
-            letter-spacing: 1px; /* Reducido levemente el espacio entre letras para encajar de forma orgánica en la curva */
+            font-size: 74px;
+            fill: url(#goldGradientRef);
+            letter-spacing: 0.5px;
         }
 
-        .header h1 { 
+        /* 4. Cápsula Elegante para Frase */
+        .header-capsule {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: var(--premium-shadow);
+            margin-top: 20px;
+            display: inline-block;
+            transform: translateY(0);
+            transition: var(--transition-smooth);
+        }
+        .header-capsule:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--gold-glow);
+        }
+        .header-capsule h1 { 
             font-family: var(--font-fancy); 
-            color: #b39158; 
-            font-size: clamp(2.5rem, 6vw, 4rem); 
+            color: var(--gold-dark); 
+            font-size: clamp(2rem, 5vw, 2.8rem); 
             margin: 0; 
+            font-weight: 700;
         }
         
-        /* --- SECCIÓN TITULO CON MASCOTAS LATERALES (logo-hero.png) --- */
+        /* 6. Cabecera Elegante de Precios con Líneas Decorativas Doradas */
         .title-with-side-logos {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
+            gap: 35px;
+            margin: 60px 0 30px 0;
             width: 100%;
+            position: relative;
         }
+        .title-with-side-logos::before, .title-with-side-logos::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to var(--direction, right), transparent, var(--gold-primary), transparent);
+        }
+        .title-with-side-logos::before { --direction: right; }
+        .title-with-side-logos::after { --direction: left; }
 
         .section-title { 
-            font-size: 2.5rem; 
+            font-size: 2.2rem; 
             font-weight: 800; 
-            color: #333; 
+            color: var(--text-dark); 
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin: 0; 
         }
 
+        /* 5. Mascotas Convertidas en Badges Premium */
         .side-logo-badge {
-            width: 95px;
-            height: 95px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            border: 1.5px solid var(--price-gold); 
-            box-shadow: 0 4px 10px rgba(181, 149, 91, 0.2);
-            background: #fff;
+            border: 1px solid var(--gold-primary); 
+            box-shadow: var(--premium-shadow);
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            padding: 5px;
+            padding: 4px;
+            position: relative;
+            transition: var(--transition-smooth);
         }
-        
+        .side-logo-badge::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px; right: 3px; bottom: 3px;
+            border-radius: 50%;
+            border: 1px dashed var(--gold-primary);
+            opacity: 0.6;
+        }
+        .side-logo-badge:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--gold-glow);
+        }
         .side-logo-img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: contain; 
+            z-index: 2;
         }
 
-        /* --- PRODUCT GRID & CARDS --- */
+        /* 35. COMENTARIOS: SECCIÓN PRODUCTOS */
+        /* 27. Animación de Aparición Secuencial (Fade-In + Slide) */
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1.2fr 1fr;
-            gap: 20px;
-            align-items: center;
+            grid-template-columns: 1fr 1.1fr 1fr;
+            gap: 30px;
+            align-items: start;
+            animation: fadeInContainer 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 7. Tarjetas Rediseñadas (Glassmorphism & Premium Layout) */
         .product-card {
             text-align: center;
-            padding: 20px;
-            transition: all 0.4s ease;
+            padding: 30px 25px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             position: relative;
-            border-radius: 20px;
             overflow: hidden;
+            box-shadow: var(--premium-shadow);
+            transition: var(--transition-smooth);
         }
-        .product-card:hover { transform: translateY(-12px) scale(1.02); background: rgba(255,255,255,0.5); }
         
+        /* Reflejo y Glow Dinámico al Hover */
         .product-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg); transition: 0.5s;
+            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-25deg); transition: 0.7s;
+        }
+        .product-card:hover { 
+            transform: translateY(-10px); 
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 30px 60px rgba(179, 145, 88, 0.15), var(--gold-glow); 
         }
         .product-card:hover::before { left: 150%; }
 
+        /* 8. Fotografías con Marco Metálico y Zoom */
+        .photo-frame {
+            display: inline-block;
+            border-radius: 16px;
+            padding: 5px;
+            background: var(--gold-gradient);
+            box-shadow: 0 10px 25px rgba(44, 37, 25, 0.12);
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
         .framed-img {
             width: 100%;
-            max-width: 170px;
-            height: auto;
+            max-width: 160px;
+            height: 160px;
             object-fit: cover;
             border-radius: 12px;
-            border: var(--gold-frame);
-            box-shadow: var(--gold-shadow);
+            display: block;
+            transition: var(--transition-smooth);
+        }
+        .product-card:hover .framed-img {
+            transform: scale(1.08);
         }
 
-        .prod-info b { font-size: 1.4rem; color: #333; display: block; margin-top: 15px; }
-        .prod-info span { font-size: 1rem; color: #777; font-weight: 700; }
+        /* 30. Tipografías, Pesos y Espaciados Optimizados */
+        .prod-info b { 
+            font-size: 1.3rem; 
+            color: var(--text-dark); 
+            display: block; 
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .prod-info span { 
+            font-size: 0.9rem; 
+            color: var(--text-light); 
+            font-weight: 600; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
+        /* 9. Etiquetas de Precios Convertidas en Medallas Doradas */
         .price-tag {
-            background: var(--price-gold);
+            background: var(--gold-gradient);
             color: white; width: 85px; height: 85px; border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center;
-            margin: 15px auto; font-weight: 800; border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 5px 15px rgba(181, 149, 91, 0.4);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            margin: 20px auto 0 auto; font-weight: 800; 
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 10px 20px rgba(140, 109, 57, 0.35), inset 0 2px 4px rgba(255,255,255,0.3);
+            position: relative;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-        .price-tag big { font-size: 1.5rem; }
-        .price-tag small { font-size: 0.6rem; letter-spacing: 1px; }
+        .price-tag::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .price-tag big { font-size: 1.4rem; font-weight: 800; line-height: 1.1; }
+        .price-tag small { font-size: 0.65rem; letter-spacing: 0.5px; opacity: 0.9; }
 
-        /* --- PROMO BOX --- */
+        /* 35. COMENTARIOS: SECCIÓN PROMO */
+        /* 10. Tarjeta de Promoción Premium Central */
         .promo-box {
-            background: white; border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            border: 2px solid #eee; overflow: hidden;
-            text-align: center; transition: 0.4s;
+            background: white; 
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(44, 37, 25, 0.15);
+            border: 1px solid rgba(179, 145, 88, 0.25); 
+            overflow: hidden;
+            text-align: center; 
+            transition: var(--transition-smooth);
+            position: relative;
         }
-        .promo-box:hover { transform: scale(1.03); }
-        .promo-header { background: var(--gold-gradient); color: white; padding: 20px; }
-        .promo-header h4 { margin: 0; font-size: 1.1rem; letter-spacing: 2px; font-weight: 800; }
-        .promo-header h2 { font-family: var(--font-fancy); font-size: 3.2rem; margin: 5px 0; }
+        .promo-box:hover { 
+            transform: scale(1.02) translateY(-4px); 
+            box-shadow: 0 40px 80px rgba(140, 109, 57, 0.2);
+        }
+        .promo-header { 
+            background: var(--gold-gradient); 
+            color: white; 
+            padding: 30px 20px; 
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .promo-header h4 { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            letter-spacing: 1.5px; 
+            font-weight: 800; 
+            opacity: 0.95;
+        }
+        .promo-header h2 { 
+            font-family: var(--font-fancy); 
+            font-size: 3.5rem; 
+            margin-top: 5px;
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
         
-        .promo-content { padding: 30px 20px; }
+        .promo-content { padding: 35px 25px; }
         .gift-container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
         
-        .gift-item img {
-            width: 130px; height: 130px; border-radius: 12px; border: var(--gold-frame); box-shadow: var(--gold-shadow); object-fit: cover;
+        /* 11. Regalos con Marcos Premium y Zoom */
+        .gift-item .photo-frame {
+            margin-bottom: 5px;
         }
-        .gift-item p { font-weight: 800; font-size: 1.2rem; margin-top: 10px; line-height: 1.2; color: #444; }
+        .gift-item img {
+            width: 140px; height: 140px; border-radius: 12px; object-fit: cover; display: block; transition: var(--transition-smooth);
+        }
+        .promo-box:hover .gift-item img { transform: scale(1.06); }
+        .gift-item p { font-weight: 800; font-size: 1.1rem; margin-top: 10px; line-height: 1.3; color: var(--text-dark); letter-spacing: 0.5px; }
 
-        /* --- SECCIÓN SEGUIMIENTO GPS --- */
-        .gps-section { margin-top: 60px; border-top: 3px dashed rgba(181, 149, 91, 0.2); padding-top: 40px; text-align: center; }
+        .or-separator {
+            font-weight: 900; 
+            color: var(--gold-primary); 
+            font-size: 1.6rem; 
+            margin: 5px 0;
+            font-family: var(--font-fancy);
+        }
+
+        /* 12. Texto GRATIS convertido en Sello Elegante */
+        .badge-gratis {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 8px 24px;
+            border: 2px dashed var(--gold-primary);
+            border-radius: 8px;
+            background: #fffbf2;
+            transform: rotate(-2deg);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .badge-gratis .stars {
+            color: var(--gold-primary);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .badge-gratis .text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #d32f2f;
+            letter-spacing: 1px;
+            display: block;
+            line-height: 1.1;
+        }
+
+        .promo-box small { 
+            display: block;
+            margin-top: 15px;
+            color: var(--text-light); 
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* 35. COMENTARIOS: SECCIÓN MAPA Y GPS */
+        /* 13. Separador Elegante con Sello de Cierre Relieve */
+        .gps-section { 
+            margin-top: 70px; 
+            border-top: 1px solid rgba(179, 145, 88, 0.25); 
+            padding-top: 50px; 
+            text-align: center; 
+            position: relative;
+        }
+        .gps-section::before {
+            content: '✨';
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--paper-clean);
+            padding: 0 15px;
+            color: var(--gold-primary);
+            font-size: 1.2rem;
+        }
         
+        /* 14. Dashboard Moderno para GPS de Ruta */
+        .status-pill { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 12px 28px; 
+            background: white; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+            border: 1px solid rgba(179, 145, 88, 0.2); 
+            box-shadow: var(--premium-shadow);
+        }
+        
+        /* 15. Indicador de Estado Animado (Pulso Continuo) */
+        .dot { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            background: #EF4444; 
+            position: relative;
+            transition: background 0.3s ease;
+        }
+        .dot.active-pulse::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            border-radius: 50%;
+            background: inherit;
+            animation: pulseGlow 1.6s infinite ease-in-out;
+        }
+
+        /* 16. Título Ruta del Sabor Mejorado */
+        .map-title-container {
+            margin-top: 35px; 
+            margin-bottom: 25px;
+        }
+        .map-main-title { 
+            font-family: var(--font-fancy); 
+            font-size: 4rem; 
+            background: var(--gold-gradient); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin: 0; 
+            line-height: 1.1; 
+            font-weight: 900;
+            filter: drop-shadow(0 2px 2px rgba(140, 109, 57, 0.1));
+        }
+        .map-subtitle { 
+            font-weight: 700; 
+            color: var(--text-light); 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-size: 0.85rem; 
+            margin-top: 8px; 
+        }
+        
+        /* 17. Mapa con Marco Elegante Incrustado */
         #map-container { 
             width: 100%; 
-            height: 450px; 
-            margin: 30px 0; 
-            border-radius: 20px; 
-            border: 6px solid white; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            height: 480px; 
+            margin: 35px 0; 
+            border-radius: 24px; 
+            border: 8px solid white; 
+            box-shadow: 0 25px 55px rgba(44, 37, 25, 0.15), inset 0 0 20px rgba(0,0,0,0.05); 
             overflow: hidden; 
             position: relative;
         }
-
-        #mapa { width: 100%; height: 100%; }
+        #mapa { width: 100%; height: 100%; z-index: 1; }
         
-        .truck-emoji { font-size: 45px; display: inline-block; }
-
-        .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 12px 25px; background: white; border-radius: 50px; font-weight: 800; border: 1px solid #eee; }
-        .dot { width: 14px; height: 14px; border-radius: 50%; background: #EF4444; }
-
-        .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
-        .btn { padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.95rem; }
-        .btn-wa { background: #2563eb; color: white; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
-        .btn-wa:hover { transform: translateY(-3px); }
-        .btn-gold { background: var(--price-gold); color: white; }
-        .btn-outline { background: white; border: 2px solid var(--price-gold); color: var(--price-gold); }
-
-        #adminPanel {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 30px; border-radius: 25px; z-index: 10000;
-            border: 5px solid var(--brand-yellow); display: none; text-align: center; width: 320px; box-shadow: 0 0 100px rgba(0,0,0,0.6);
+        /* 18. Camión con Animación de Rebote Suave */
+        .truck-emoji { 
+            font-size: 45px; 
+            display: inline-block; 
+            animation: truckBounce 0.6s ease-in-out infinite alternate;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
         }
 
+        /* 19. Botonera Premium Unificada */
+        .btn-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 35px; }
+        
+        .btn { 
+            padding: 14px 28px; 
+            border-radius: 50px; 
+            border: none; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: var(--transition-smooth); 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--premium-shadow);
+        }
+        
+        /* 38. Accesibilidad e Indicadores de Foco */
+        .btn:focus-visible {
+            outline: 3px solid var(--gold-primary);
+            outline-offset: 2px;
+        }
+
+        /* 20. Botón de WhatsApp Estilo Protagonista Realzado */
+        .btn-wa { 
+            background: #2563eb; 
+            color: white; 
+            font-size: 1.05rem;
+            padding: 16px 36px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35); 
+        }
+        .btn-wa:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5), 0 0 20px rgba(37, 99, 235, 0.2); 
+        }
+        
+        /* 21. Google Maps & 22. Compartir Nuevos Estilos Modernos */
+        .btn-gold { 
+            background: var(--gold-gradient); 
+            color: white; 
+            box-shadow: 0 10px 20px rgba(140, 109, 57, 0.25);
+        }
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(140, 109, 57, 0.4), var(--gold-glow);
+        }
+
+        .btn-outline { 
+            background: white; 
+            border: 1px solid rgba(179, 145, 88, 0.4); 
+            color: var(--text-dark); 
+        }
+        .btn-outline:hover { 
+            transform: translateY(-3px);
+            background: #fffbf5;
+            border-color: var(--gold-primary);
+            box-shadow: 0 10px 20px rgba(179, 145, 88, 0.1);
+        }
+
+        /* 23. Likes Animados */
+        .like-counter {
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+            font-weight: 800;
+        }
+        .like-bounce {
+            animation: elementBounce 0.4s ease;
+        }
+
+        /* 35. COMENTARIOS: SECCIÓN ADMINISTRACIÓN */
+        /* 24. Panel de Administración de Diseño Premium */
+        #adminPanel {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95); 
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            padding: 40px 35px; border-radius: 28px; z-index: 10000;
+            border: 1px solid var(--glass-border); 
+            display: none; text-align: center; width: 350px; 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.25), var(--gold-glow);
+            animation: panelAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 25. Inputs de Mejor Diseño */
+        .admin-title {
+            font-family: var(--font-fancy); font-size: 2.5rem; color: var(--gold-dark); margin-bottom: 25px; font-weight: 800;
+        }
+        .admin-btn {
+            width: 100%; margin-bottom: 12px; display: justify; justify-content: center;
+        }
+
+        /* 26. ANIMACIONES ELEGANTES (Fade, Slide, Scale, Float, Glow) */
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.4); opacity: 0; }
+        }
+        @keyframes truckBounce {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-4px) rotate(2deg); }
+        }
+        @keyframes fadeInContainer {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes elementBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        @keyframes panelAppear {
+            0% { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* 29. RESPONSIVE OPTIMIZADO (Mayor Respiración y Jerarquía en Móviles) */
         @media (max-width: 900px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .promo-box { order: -1; margin-bottom: 30px; }
-            .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 200px; height: 200px; margin-top: 75px; }
-            /* Adaptación responsiva para pantallas móviles */
-            .hero-text-overlay { width: 240px; height: 240px; top: -34px; left: -20px; }
-            .hero-text-overlay text { font-size: 56px; letter-spacing: 1px; }
+            body { padding: 15px 10px; }
+            .menu-paper { padding: 40px 20px; border-radius: 20px; }
+            .content-grid { grid-template-columns: 1fr; gap: 35px; }
+            .promo-box { order: -1; margin-bottom: 10px; }
+            .title-with-side-logos { flex-direction: column; gap: 20px; margin: 45px 0 25px 0; }
+            .title-with-side-logos::before, .title-with-side-logos::after { display: none; }
+            .hero-banner-container { width: 190px; height: 190px; margin-top: 25px; }
+            .hero-text-overlay { width: 250px; height: 250px; top: -40px; left: -30px; }
+            .hero-text-overlay text { font-size: 62px; }
+            .map-main-title { font-size: 3.2rem; }
+            #map-container { height: 380px; border-width: 5px; margin: 25px 0; }
+            .btn-group { gap: 10px; }
+            .btn { width: 100%; justify-content: center; padding: 14px 20px; }
+            .btn-wa { padding: 16px 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="menu-paper">
+        <!-- Definición de Gradientes reutilizables para SVGs -->
+        <svg width="0" height="0" style="position: absolute;">
+            <defs>
+                <linearGradient id="goldGradientRef" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d4af37" />
+                    <stop offset="50%" stop-color="#b39158" />
+                    <stop offset="100%" stop-color="#8a6d29" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <!-- 35. COMENTARIOS: ESTRUCTURA HERO -->
         <div class="branding-section">
-            
-            <!-- Contenedor del Logo Principal -->
             <div class="hero-banner-container">
+                <!-- Logotipo e Imágenes Intactas (Regla Excluyente) -->
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- SVG Conservando la trayectoria esférica exacta de 9 a 3 -->
+                <!-- SVG Rediseñado con Estilo Metálico Grabado manteniendo Arquitectura Curva -->
                 <svg class="hero-text-overlay" viewBox="0 0 300 300">
                     <path id="heroArcPath" d="M 15,150 A 135,135 0 0,1 285,150" fill="none" />
                     <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
                 </svg>
             </div>
 
-            <header class="header">
+            <!-- Frase en Cápsula Elegante -->
+            <div class="header-capsule">
                 <h1>"Del horno a tu paladar"</h1>
-            </header>
+            </div>
             
-            <!-- Bloque de precios con mascotas alineadas -->
+            <!-- Cabecera de Precios Rediseñada -->
             <div class="title-with-side-logos">
                 <div class="side-logo-badge">
                     <img src="logo-hero.png" alt="Mascota Izquierda" class="side-logo-img">
@@ -282,22 +714,26 @@
             </div>
         </div>
 
-        <!-- Grid de Productos -->
+        <!-- 35. COMENTARIOS: CONTENEDOR DE PRODUCTOS -->
         <div class="content-grid">
             <div class="column">
                 <div class="product-card">
-                    <img src="funda.jpeg" alt="Funda de Pan" class="framed-img">
+                    <div class="photo-frame">
+                        <img src="funda.jpeg" alt="Funda de Pan" class="framed-img">
+                    </div>
                     <div class="prod-info"><b>Funda de Pan</b><span>(4 unidades)</span></div>
                     <div class="price-tag"><big>$1.00</big><small>USD</small></div>
                 </div>
                 <div class="product-card">
-                    <img src="combo1.jpeg" alt="Combo 1" class="framed-img">
+                    <div class="photo-frame">
+                        <img src="combo1.jpeg" alt="Combo 1" class="framed-img">
+                    </div>
                     <div class="prod-info"><b>🔥 Combo 1</b><span>(4 Panes + Yogurt)</span></div>
                     <div class="price-tag"><big>$1.50</big><small>USD</small></div>
                 </div>
             </div>
 
-            <!-- Caja de Promoción Central -->
+            <!-- Caja de Promoción Destacada Premium -->
             <div class="promo-box">
                 <div class="promo-header">
                     <h4>🎁 PROMO ESPECIAL POR LA COMPRA DE 5 FUNDAS</h4>
@@ -306,73 +742,91 @@
                 <div class="promo-content">
                     <div class="gift-container">
                         <div class="gift-item">
-                            <img src="regalo-yogurt.jpeg" alt="2 Vasos Yogurt">
+                            <div class="photo-frame">
+                                <img src="regalo-yogurt.jpeg" alt="2 Vasos Yogurt">
+                            </div>
                             <p>2 VASOS DE<br>YOGURT</p>
                         </div>
-                        <div style="font-weight: 900; color: var(--price-gold); font-size: 1.8rem; margin: 10px 0;">ó</div>
+                        <div class="or-separator">ó</div>
                         <div class="gift-item">
-                            <img src="regalo-funda.jpeg" alt="Funda Pan Extra">
+                            <div class="photo-frame">
+                                <img src="regalo-funda.jpeg" alt="Funda Pan Extra">
+                            </div>
                             <p>1 FUNDA DE<br>PAN ADICIONAL</p>
                         </div>
                     </div>
-                    <div style="font-family: var(--font-fancy); font-size: 2.5rem; margin-top: 15px; color:#333">¡Gratis! 😍</div>
-                    <small style="color:#999">Por la compra de 5 fundas</small>
+                    
+                    <!-- Sello de Regalo Reestructurado -->
+                    <div class="badge-gratis">
+                        <span class="stars">★★★★★</span>
+                        <span class="text">GRATIS</span>
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    
+                    <small>Por la compra de 5 fundas</small>
                 </div>
-                <div onclick="abrirAdmin()" style="height:30px; cursor:pointer;"></div>
+                <!-- Zona Invisible de Activación del Panel manteniendo la firma exacta -->
+                <div onclick="abrirAdmin()" style="height:35px; cursor:pointer; position:absolute; bottom:0; left:0; width:100%;"></div>
             </div>
 
             <div class="column">
                 <div class="product-card">
-                    <img src="yogurt.jpeg" alt="Yogurt Artesanal" class="framed-img">
+                    <div class="photo-frame">
+                        <img src="yogurt.jpeg" alt="Yogurt Artesanal" class="framed-img">
+                    </div>
                     <div class="prod-info"><b>Yogurt Artesanal</b><span>Vaso</span></div>
                     <div class="price-tag"><big>$0.75</big><small>USD</small></div>
                 </div>
                 <div class="product-card">
-                    <img src="combo2.jpeg" alt="Combo 2" class="framed-img">
+                    <div class="photo-frame">
+                        <img src="combo2.jpeg" alt="Combo 2" class="framed-img">
+                    </div>
                     <div class="prod-info"><b>🔥 Combo 2</b><span>(6 Panes + Yogurt)</span></div>
                     <div class="price-tag"><big>$2.00</big><small>USD</small></div>
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Mapa / GPS -->
+        <!-- 35. COMENTARIOS: SECCIÓN DASHBOARD GPS Y MAPA -->
         <div class="gps-section">
             <div class="status-pill">
                 <div id="dot" class="dot"></div>
                 <span id="estadoTxt">Cargando estado...</span>
             </div>
             
-            <div style="margin-top: 25px; margin-bottom: 15px;">
-                <h2 style="font-family: var(--font-fancy); font-size: 3.5rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1;">La Ruta del Sabor</h2>
-                <p style="font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-top: 10px;">Llevando el sabor hacia ti</p>
+            <div class="map-title-container">
+                <h2 class="map-main-title">La Ruta del Sabor</h2>
+                <p class="map-subtitle">Llevando el sabor hacia ti</p>
             </div>
             
             <div id="map-container">
                 <div id="mapa"></div>
             </div>
             
+            <!-- Acciones y Botones Modernizados -->
             <div class="btn-group">
                 <a href="https://wa.me/593984637626" class="btn btn-wa">🛍️ Ordenar WhatsApp</a>
                 <button class="btn btn-gold" onclick="centrarMapa()">🎯 Centrar Mapa</button>
                 <button class="btn btn-outline" onclick="abrirGmaps()">🧭 Google Maps</button>
-                <button class="btn btn-outline" onclick="darLike()">❤️ <span id="likes">0</span></button>
+                <button class="btn btn-outline" onclick="darLike()">❤️ <span id="likes" class="like-counter">0</span></button>
                 <button class="btn btn-outline" onclick="compartir()">🔗 Compartir</button>
             </div>
         </div>
     </div>
 
-    <!-- Panel de Administración Oculto -->
+    <!-- Panel de Administración Rediseñado -->
     <div id="adminPanel">
-        <h2 style="font-family: var(--font-fancy); font-size: 2.2rem; color: var(--price-gold); margin-bottom: 20px;">Control de Ruta</h2>
-        <button class="btn btn-wa" style="width:100%; margin-bottom:10px; background:#22c55e" onclick="iniciarRuta()">▶️ INICIAR RUTA (GPS)</button>
-        <button class="btn btn-wa" style="width:100%; background:#ef4444" onclick="detenerRuta()">⏹️ DETENER RUTA</button>
-        <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
+        <h2 class="admin-title">Control de Ruta</h2>
+        <button class="btn admin-btn" style="background:#22c55e; color:white;" onclick="iniciarRuta()">▶️ INICIAR RUTA (GPS)</button>
+        <button class="btn admin-btn" style="background:#ef4444; color:white;" onclick="detenerRuta()">⏹️ DETENER RUTA</button>
+        <button class="btn btn-outline admin-btn" style="margin-top:15px;" onclick="document.getElementById('adminPanel').style.display='none'">Cerrar</button>
     </div>
 
-    <!-- Integración Base de Datos Firebase y Mapa Lógica -->
+    <!-- 35. COMENTARIOS: LOGICA INTEGRADA FIREBASE Y MAPAS -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script>
+        // Lógica de Negocio y Configuración Intactas (No romper funcionalidades)
         const firebaseConfig = {
             apiKey: "AIzaSyDVc_G_0LlsqqSaMGzucebnUnUqszOoZcs",
             authDomain: "pan-de-yuca.firebaseapp.com",
@@ -402,7 +856,7 @@
         });
 
         let marker = L.marker([0, 0], { icon: truckIcon }).addTo(map);
-        marker.bindPopup("<div style='text-align:center; font-weight:bold; color:#b39158;'>🚚 Llevando el sabor<br>hacia ti</div>");
+        marker.bindPopup("<div style='text-align:center; font-weight:bold; color:#8c6d39; font-family:sans-serif;'>🚚 Llevando el sabor<br>hacia ti</div>");
 
         function centrarMapa() { map.flyTo(marker.getLatLng(), 18); }
         function abrirGmaps() { 
@@ -411,8 +865,16 @@
         }
         function compartir() { navigator.clipboard.writeText(window.location.href); alert("Enlace copiado al portapapeles."); }
         function darLike() { db.ref('likes').transaction(v => (v || 0) + 1); }
-        db.ref('likes').on('value', s => document.getElementById('likes').innerText = s.val() || 0);
+        
+        // 23. Escucha de Likes con Micro-Animación de Rebote Incorporada
+        db.ref('likes').on('value', s => {
+            const el = document.getElementById('likes');
+            el.innerText = s.val() || 0;
+            el.classList.add('like-bounce');
+            setTimeout(() => el.classList.remove('like-bounce'), 400);
+        });
 
+        // 15. Gestión Dinámica de Estados y Animación de Pulso Activo
         rutaRef.on('value', snap => {
             const d = snap.val();
             const dot = document.getElementById('dot');
@@ -428,9 +890,11 @@
                 if(d.estado === 'activo') {
                     marker.openPopup();
                     dot.style.background = "#22C55E";
+                    dot.classList.add('active-pulse');
                     txt.innerText = "RUTA ACTIVA";
                 } else {
                     dot.style.background = "#EF4444";
+                    dot.classList.remove('active-pulse');
                     txt.innerText = "RUTA CERRADA";
                 }
             }
