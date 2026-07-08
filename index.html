@@ -56,7 +56,7 @@
         /* --- LOGO PRINCIPAL (logo.png) --- */
         .hero-banner-container {
             position: relative;
-            margin-top: 80px; /* Espacio calibrado para el nuevo tamaño de la palabra */
+            margin-top: 100px; /* Incrementado el margen superior para que las letras grandes no toquen el borde superior */
             margin-bottom: 30px;
             display: inline-block;
             width: 250px;  
@@ -72,22 +72,22 @@
             box-shadow: 0 4px 15px rgba(181, 149, 91, 0.15);
         }
 
-        /* Texto "LEGÍTIMO": Mismo tamaño que el h1 ("Del horno a tu paladar"), robusto y ceñido a 1/3 */
+        /* --- CORRECCIÓN: "LEGÍTIMO" UN 25% MÁS GRANDE AÚN --- */
         .hero-text-overlay {
             position: absolute;
-            top: -75px; 
-            left: 0;
-            width: 250px;
-            height: 250px;
+            top: -42px; /* Ajustado para contener la gran altura de la tipografía robusta */
+            left: -25px;
+            width: 300px;  
+            height: 300px;
             pointer-events: none;
             overflow: visible;
         }
         .hero-text-overlay text {
             font-family: var(--font-fancy);
             font-weight: 900; 
-            font-size: 64px; /* Incrementado para igualar el impacto visual del título principal */
+            font-size: 72px; /* ¡Aumentado otro 25%! Impacto visual imponente de 9 a 3 */
             fill: #b39158; 
-            letter-spacing: 0.5px;
+            letter-spacing: 1px; /* Reducido levemente el espacio entre letras para encajar de forma orgánica en la curva */
         }
 
         .header h1 { 
@@ -241,9 +241,10 @@
             .content-grid { grid-template-columns: 1fr; }
             .promo-box { order: -1; margin-bottom: 30px; }
             .title-with-side-logos { flex-direction: column; gap: 15px; }
-            .hero-banner-container { width: 200px; height: 200px; margin-top: 60px; }
-            .hero-text-overlay { width: 200px; height: 200px; top: -60px; left: 0; }
-            .hero-text-overlay text { font-size: 52px; }
+            .hero-banner-container { width: 200px; height: 200px; margin-top: 75px; }
+            /* Adaptación responsiva para pantallas móviles */
+            .hero-text-overlay { width: 240px; height: 240px; top: -34px; left: -20px; }
+            .hero-text-overlay text { font-size: 56px; letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -256,9 +257,9 @@
             <div class="hero-banner-container">
                 <img src="logo.png" alt="Logo Pan de Yuca Tradicional" class="hero-image">
                 
-                <!-- Palabra Legítimo: Mismo tamaño de fuente de los títulos principales y ceñido a 1/3 exacto -->
-                <svg class="hero-text-overlay" viewBox="0 0 250 250">
-                    <path id="heroArcPath" d="M 45,110 A 80,80 0 0,1 205,110" fill="transparent" />
+                <!-- SVG Conservando la trayectoria esférica exacta de 9 a 3 -->
+                <svg class="hero-text-overlay" viewBox="0 0 300 300">
+                    <path id="heroArcPath" d="M 15,150 A 135,135 0 0,1 285,150" fill="none" />
                     <text><textPath href="#heroArcPath" startOffset="50%" text-anchor="middle">Legítimo</textPath></text>
                 </svg>
             </div>
